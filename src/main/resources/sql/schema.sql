@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS `ses_mock`;
+
 CREATE TABLE IF NOT EXISTS ses_mock (
     `message_id`   VARCHAR(100) PRIMARY KEY,
     `from_address` VARCHAR(100) NOT NULL,
@@ -7,5 +9,7 @@ CREATE TABLE IF NOT EXISTS ses_mock (
     `subject`      TEXT NOT NULL,
     `text`         TEXT,
     `html`         TEXT,
-    `created_at`   DATETIME NOT NULL
+    `created_at`   DATETIME NOT NULL,
+    index from_index (`from_address`),
+    index from_created_at (`created_at`)
 );
