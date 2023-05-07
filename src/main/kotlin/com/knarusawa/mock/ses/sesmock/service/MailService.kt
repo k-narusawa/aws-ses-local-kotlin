@@ -30,10 +30,12 @@ class MailService(
   }
 
   fun getEmails(page: Int, size: Int, to: String?): MailDtos {
-    val entities = mailRepository.findByToOrderByAtDesc(
-      toAddress = to,
-      pageable = PageRequest.of(page, size)
-    )
+    val entities = to?.let{
+      mailRepository.findByToOrderByAtDesc(
+        toAddress = to,
+        pageable = PageRequest.of(page, size)
+      )
+    } ?: mailRepository.findByOrderByAtDesc(pageable = PageRequest.of(page, size))
     return MailDtos(entities.toList().map { MailDto.from(it) })
   }
 
