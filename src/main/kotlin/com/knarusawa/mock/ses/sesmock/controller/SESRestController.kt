@@ -1,6 +1,6 @@
 package com.knarusawa.mock.ses.sesmock.controller
 
-import com.knarusawa.mock.ses.sesmock.domain.MailDto
+import com.knarusawa.mock.ses.sesmock.domain.MailDtos
 import com.knarusawa.mock.ses.sesmock.domain.SendMailRequestDto
 import com.knarusawa.mock.ses.sesmock.service.MailService
 import org.springframework.http.HttpStatus
@@ -71,7 +71,7 @@ class SESRestController(
     @RequestParam to: String?,
     @RequestParam from: String?,
     @RequestParam since: String?,
-  ): List<MailDto> {
+  ): MailDtos {
     return mailService.getEmails(
       from = to, to = from, since = since
     )

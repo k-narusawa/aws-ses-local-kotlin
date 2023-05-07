@@ -1,6 +1,7 @@
 package com.knarusawa.mock.ses.sesmock.service
 
 import com.knarusawa.mock.ses.sesmock.domain.MailDto
+import com.knarusawa.mock.ses.sesmock.domain.MailDtos
 import com.knarusawa.mock.ses.sesmock.domain.SendMailRequestDto
 import com.knarusawa.mock.ses.sesmock.repository.MailRepository
 import org.springframework.stereotype.Service
@@ -15,8 +16,8 @@ class MailService(
     return messageId
   }
 
-  fun getEmails(from: String?, to: String?, since: String?): List<MailDto> {
+  fun getEmails(from: String?, to: String?, since: String?): MailDtos {
     val list = mailRepository.findAll()
-    return list.map { MailDto.from(it) }
+    return MailDtos(list.map { MailDto.from(it) })
   }
 }
