@@ -20,4 +20,8 @@ class MailService(
     val list = mailRepository.findAll()
     return MailDtos(list.map { MailDto.from(it) })
   }
+
+  fun clearEmails() {
+    mailRepository.deleteAll()
+  }
 }

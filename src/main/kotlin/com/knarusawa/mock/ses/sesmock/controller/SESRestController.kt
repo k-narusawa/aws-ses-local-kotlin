@@ -67,6 +67,7 @@ class SESRestController(
   }
 
   @GetMapping("/store")
+  @ResponseStatus(HttpStatus.OK)
   fun getEmails(
     @RequestParam to: String?,
     @RequestParam from: String?,
@@ -75,5 +76,11 @@ class SESRestController(
     return mailService.getEmails(
       from = to, to = from, since = since
     )
+  }
+
+  @PostMapping("/clear")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  fun clearEmails() {
+    mailService.clearEmails()
   }
 }
