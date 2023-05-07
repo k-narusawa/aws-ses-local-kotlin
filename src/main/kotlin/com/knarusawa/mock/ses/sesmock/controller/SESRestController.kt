@@ -73,9 +73,7 @@ class SESRestController(
     @RequestParam from: String?,
     @RequestParam since: String?,
   ): MailDtos {
-    return mailService.getEmails(
-      from = to, to = from, since = since
-    )
+    return mailService.getEmails(since = since)
   }
 
   @PostMapping("/clear")

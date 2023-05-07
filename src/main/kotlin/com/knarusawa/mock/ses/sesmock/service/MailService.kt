@@ -4,6 +4,7 @@ import com.knarusawa.mock.ses.sesmock.domain.MailDto
 import com.knarusawa.mock.ses.sesmock.domain.MailDtos
 import com.knarusawa.mock.ses.sesmock.domain.SendMailRequestDto
 import com.knarusawa.mock.ses.sesmock.repository.MailRepository
+import com.knarusawa.mock.ses.sesmock.util.DateTimeUtil
 import org.springframework.stereotype.Service
 
 @Service
@@ -16,9 +17,15 @@ class MailService(
     return messageId
   }
 
-  fun getEmails(from: String?, to: String?, since: String?): MailDtos {
-    val list = mailRepository.findAll()
-    return MailDtos(list.map { MailDto.from(it) })
+  fun getEmails(since: String?): MailDtos {
+    val entities = since?.let {
+      mailRepository.findByAtAfter(
+        createdAt = DateTimeUtil.timestampToLocalDateTime(it.toLong())
+      )
+    } ?: mailRepository.findByAtAfter(
+      createdAt = DateTimeUtil.minutesAgo(5L)
+    )
+    return MailDtos(entities.map { MailDto.from(it) })
   }
 
   fun clearEmails() {
