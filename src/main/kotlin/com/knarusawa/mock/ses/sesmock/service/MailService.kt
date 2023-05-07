@@ -5,6 +5,7 @@ import com.knarusawa.mock.ses.sesmock.domain.MailDtos
 import com.knarusawa.mock.ses.sesmock.domain.SendMailRequestDto
 import com.knarusawa.mock.ses.sesmock.repository.MailRepository
 import com.knarusawa.mock.ses.sesmock.util.DateTimeUtil
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 
 @Service
@@ -26,6 +27,14 @@ class MailService(
       createdAt = DateTimeUtil.minutesAgo(5L)
     )
     return MailDtos(entities.map { MailDto.from(it) })
+  }
+
+  fun getEmails(page: Int, size: Int, to: String?): MailDtos {
+    val entities = mailRepository.findByToOrderByAtDesc(
+      toAddress = to,
+      pageable = PageRequest.of(page, size)
+    )
+    return MailDtos(entities.toList().map { MailDto.from(it) })
   }
 
   fun clearEmails() {

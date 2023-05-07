@@ -68,12 +68,24 @@ class SESRestController(
 
   @GetMapping("/store")
   @ResponseStatus(HttpStatus.OK)
-  fun getEmails(
-    @RequestParam to: String?,
-    @RequestParam from: String?,
+  fun store(
     @RequestParam since: String?,
   ): MailDtos {
     return mailService.getEmails(since = since)
+  }
+
+  @GetMapping("/emails")
+  @ResponseStatus(HttpStatus.OK)
+  fun getEmails(
+    @RequestParam to: String?,
+    @RequestParam(defaultValue = "0") page: Int,
+    @RequestParam(defaultValue = "10") size: Int,
+  ): MailDtos {
+    return mailService.getEmails(
+      page = page,
+      size = size,
+      to = to,
+    )
   }
 
   @PostMapping("/clear")
