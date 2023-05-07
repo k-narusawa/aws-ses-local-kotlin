@@ -10,5 +10,6 @@ CREATE TABLE IF NOT EXISTS ses_mock (
     `text`         TEXT,
     `html`         TEXT,
     `created_at`   DATETIME NOT NULL,
-    index from_index (`from_address`)
+    index from_index (`from_address`),
+    index from_created_at (`created_at`)
 );
