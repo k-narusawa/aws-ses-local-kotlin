@@ -39,8 +39,10 @@ jib {
         args = []
         ports = ["8005"]
     }
+    to {
+        image = "registry.hub.docker.com/19992240/aws-ses-local"
+    }
 }
-jib.to.image = "registry.hub.docker.com/19992240/aws-ses-local"
 
 tasks.named('test') {
     useJUnitPlatform()
