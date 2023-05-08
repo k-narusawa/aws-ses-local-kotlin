@@ -1,5 +1,3 @@
-DROP TABLE IF EXISTS `ses_mock`;
-
 CREATE TABLE IF NOT EXISTS ses_mock (
     `message_id`   VARCHAR(100) PRIMARY KEY,
     `from_address` VARCHAR(100) NOT NULL,

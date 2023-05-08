@@ -14,5 +14,9 @@ interface MailRepository : CrudRepository<MailEntity, Long> {
     pageable: Pageable
   ): Page<MailEntity>
 
+  fun findByOrderByAtDesc(
+    pageable: Pageable
+  ): Page<MailEntity>
+
   fun findByAtAfter(createdAt: LocalDateTime): List<MailEntity>
 }
