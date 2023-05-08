@@ -6,6 +6,12 @@
     <link th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" rel="stylesheet" >
 </head>
 <body>
+<form th:action="@{/}" method="get">
+    <div class="mb-3">
+        <label for="FormControlInput" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="FormControlInput" placeholder="sample@team-lab.com" th:name="to">
+    </div>
+</form>
 <div class="accordion accordion-flush" id="accordionFlush">
     <div class="accordion-item">
         <th:block th:each="mail : ${mails}">
