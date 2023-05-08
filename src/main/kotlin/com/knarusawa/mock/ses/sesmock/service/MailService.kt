@@ -21,12 +21,14 @@ class MailService(
   fun getEmails(since: String?): MailDtos {
     val entities = since?.let {
       mailRepository.findByAtAfter(
-        createdAt = DateTimeUtil.timestampToLocalDateTime(it.toLong())
+        createdAt = DateTimeUtil.timestampToLocalDateTime(it.toLong()),
+        pageable = PageRequest.of(0, 1000)
       )
     } ?: mailRepository.findByAtAfter(
-      createdAt = DateTimeUtil.minutesAgo(5L)
+      createdAt = DateTimeUtil.minutesAgo(5L),
+      pageable = PageRequest.of(0, 1000)
     )
-    return MailDtos(entities.map { MailDto.from(it) })
+    return MailDtos.from(entities)
   }
 
   fun getEmails(page: Int, size: Int, to: String?): MailDtos {
@@ -36,7 +38,7 @@ class MailService(
         pageable = PageRequest.of(page, size)
       )
     } ?: mailRepository.findByOrderByAtDesc(pageable = PageRequest.of(page, size))
-    return MailDtos(entities.toList().map { MailDto.from(it) })
+    return MailDtos.from(entities)
   }
 
   fun clearEmails() {
