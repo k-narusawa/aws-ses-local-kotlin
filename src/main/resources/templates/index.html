@@ -16,24 +16,43 @@
 </form>
 <div class="accordion accordion-flush" id="accordionFlush">
     <div class="accordion-item">
-        <th:block th:each="mail : ${mails}">
+        <th:block th:each="mail : ${mails.emails}">
             <h2 class="accordion-header" th:id="${mail.messageId}">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" th:data-bs-target="'#flush-' + ${mail.messageId}" aria-expanded="false" th:aria-controls="'flush-' + ${mail.messageId}">
-                    subject:  [[${mail.subject}]]
+                    [[${mail.subject}]]
                     to: [[${mail.destination.to[0]}]]
                 </button>
             </h2>
             <div th:id="'flush-' + ${mail.messageId}" class="accordion-collapse collapse" th:aria-labelledby="${mail.messageId}" data-bs-parent="#accordionFlush">
                 <div class="accordion-body">
-                    <p>from: [[${mail.from}]]</p><br/>
-                    <p>text: [[${mail.body.text}]]</p><br/>
-                    <p>html: [[${mail.body.html}]]</p><br/>
-                    <p>at: [[${mail.at}]]</p><br/>
+                    <p>subject: [[${mail.subject}]]</p>
+                    <p>to: [[${mail.destination.to[0]}]]</p>
+                    <p>from: [[${mail.from}]]</p>
+                    <blockquote class="blockquote">
+                        <p>text:<br/> [[${mail.body.text}]]</p>
+                    </blockquote>
+                    <blockquote class="blockquote">
+                        <p>html:<br/> [[${mail.body.html}]]</p>
+                    </blockquote>
+                    <p>at: [[${mail.at}]]</p>
                 </div>
             </div>
         </th:block>
     </div>
 </div>
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        <li class="page-item" th:classappend="${mails.currentPage == 0} ? 'disabled' : ''">
+            <a class="page-link" th:href="@{'?page= + '${mails.totalPage - 1}}">&laquo;</a>
+        </li>
+        <li class="page-item" th:each="page : ${#numbers.sequence(1, mails.totalPage)}" th:classappend="${mails.currentPage + 1 == page} ? 'active' : ''">
+            <a class="page-link" th:href="@{'?page='+ ${page}}" th:text="${page}"></a>
+        </li>
+        <li class="page-item" th:classappend="${mails.currentPage + 1 == mails.totalPage} ? 'disabled' : ''">
+            <a class="page-link" th:href="@{'?page=' + ${mails.currentPage + 2}}">&raquo;</a>
+        </li>
+    </ul>
+</nav>
 <script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"></script>
 </body>
 </html>
