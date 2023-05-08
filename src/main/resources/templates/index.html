@@ -7,9 +7,11 @@
 </head>
 <body>
 <form th:action="@{/}" method="get">
-    <div class="mb-3">
-        <label for="FormControlInput" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="FormControlInput" placeholder="sample@team-lab.com" th:name="to">
+    <div class="col-md">
+        <div class="form-floating">
+            <input type="email" class="form-control" id="floatingInputGrid" placeholder="sample@team-lab.com" th:name="to">
+            <label for="floatingInputGrid">Email address</label>
+        </div>
     </div>
 </form>
 <div class="accordion accordion-flush" id="accordionFlush">
