@@ -10,14 +10,17 @@
     <div class="accordion-item">
         <th:block th:each="mail : ${mails}">
             <h2 class="accordion-header" th:id="${mail.messageId}">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" th:data-bs-target="'#flush-' + ${mail.messageId}" aria-expanded="false" th:aria-controls="'flush-' + ${mail.messageId}" th:text="${mail.subject}">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" th:data-bs-target="'#flush-' + ${mail.messageId}" aria-expanded="false" th:aria-controls="'flush-' + ${mail.messageId}">
+                    subject:  [[${mail.subject}]]
+                    to: [[${mail.destination.to[0]}]]
                 </button>
             </h2>
             <div th:id="'flush-' + ${mail.messageId}" class="accordion-collapse collapse" th:aria-labelledby="${mail.messageId}" data-bs-parent="#accordionFlush">
                 <div class="accordion-body">
-                    <p>to: [[${mail.destination.to}]]</p><br/>
+                    <p>from: [[${mail.from}]]</p><br/>
                     <p>text: [[${mail.body.text}]]</p><br/>
                     <p>html: [[${mail.body.html}]]</p><br/>
+                    <p>at: [[${mail.at}]]</p><br/>
                 </div>
             </div>
         </th:block>
