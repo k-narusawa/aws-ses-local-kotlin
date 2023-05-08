@@ -22,11 +22,11 @@ class MailService(
     val entities = since?.let {
       mailRepository.findByAtAfter(
         createdAt = DateTimeUtil.timestampToLocalDateTime(it.toLong()),
-        pageable = PageRequest.of(0, 1000)
+        pageable = PageRequest.of(0, 10000)
       )
     } ?: mailRepository.findByAtAfter(
       createdAt = DateTimeUtil.minutesAgo(5L),
-      pageable = PageRequest.of(0, 1000)
+      pageable = PageRequest.of(0, 10000)
     )
     return MailDtos.from(entities)
   }
