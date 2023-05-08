@@ -16,9 +16,12 @@ class SESController(
     fun index(
         model: Model,
         @RequestParam(name = "to") to: String? = null,
+        @RequestParam(name = "page", defaultValue = "1") page: Int,
+        @RequestParam(name = "size", defaultValue = "10") size: Int,
     ): String {
-        val entities = mailService.getEmails(page = 0, size=10, to = to)
-        model.addAttribute("mails", entities.emails)
+        val entities = mailService.getEmails(page = page - 1, size=size, to = to)
+        model.addAttribute("mails", entities)
+        model.addAttribute("to", to)
         return "index"
     }
 }
