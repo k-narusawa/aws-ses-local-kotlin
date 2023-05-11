@@ -70,8 +70,9 @@ class SESRestController(
   @ResponseStatus(HttpStatus.OK)
   fun store(
     @RequestParam since: String?,
+    @RequestParam to: String?
   ): MailDtos {
-    return mailService.getEmails(since = since)
+    return mailService.getEmails(since = since, to = to)
   }
 
   @GetMapping("/emails")
