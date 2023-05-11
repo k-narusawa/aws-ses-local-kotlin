@@ -61,7 +61,7 @@
     <nav aria-label="Page navigation">
         <ul class="pagination">
             <li class="page-item" th:classappend="${mails.currentPage == 0} ? 'disabled' : ''">
-                <a class="page-link" th:href="@{'?page=' + ${mails.currentPage - 2}}">&laquo;</a>
+                <a class="page-link" th:href="@{'?page=' + ${mails.currentPage}}">&laquo;</a>
             </li>
             <li class="page-item" th:each="page : ${#numbers.sequence(1, mails.totalPage)}" th:classappend="${mails.currentPage + 1 == page} ? 'active' : ''">
                 <a class="page-link" th:href="@{'?page='+ ${page}}" th:text="${page}"></a>
