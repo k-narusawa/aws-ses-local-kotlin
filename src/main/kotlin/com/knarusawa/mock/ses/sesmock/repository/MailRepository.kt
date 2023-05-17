@@ -18,6 +18,7 @@ interface MailRepository : CrudRepository<MailEntity, Long> {
     pageable: Pageable
   ): Page<MailEntity>
 
-  fun findByAtAfter(createdAt: LocalDateTime, pageable: Pageable): Page<MailEntity>
+  fun findByAtBefore(createdAt: LocalDateTime, pageable: Pageable): Page<MailEntity>
+
   fun findByToAndAtAfter(toAddress: String?, createdAt: LocalDateTime, pageable: Pageable): Page<MailEntity>
 }

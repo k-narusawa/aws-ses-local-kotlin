@@ -4,6 +4,7 @@ import com.knarusawa.mock.ses.sesmock.domain.MailDtos
 import com.knarusawa.mock.ses.sesmock.domain.SendMailRequestDto
 import com.knarusawa.mock.ses.sesmock.service.MailService
 import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -93,5 +94,19 @@ class SESRestController(
   @ResponseStatus(HttpStatus.NO_CONTENT)
   fun clearEmails() {
     mailService.clearEmails()
+  }
+
+  @DeleteMapping("/batch-clear")
+  @ResponseStatus(HttpStatus.OK)
+  fun batchClearEmails(
+    @RequestParam(defaultValue = "0") page: Int,
+    @RequestParam(defaultValue = "0") size: Int,
+    @RequestParam(defaultValue = "300") seconds: Int
+  ):Int {
+    return  mailService.batchClearEmails(
+      page = page,
+      size= size,
+      seconds = seconds
+    )
   }
 }
