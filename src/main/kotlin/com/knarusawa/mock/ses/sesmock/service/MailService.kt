@@ -6,8 +6,10 @@ import com.knarusawa.mock.ses.sesmock.repository.MailRepository
 import com.knarusawa.mock.ses.sesmock.util.DateTimeUtil
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
+@Transactional
 class MailService(
   private val mailRepository: MailRepository
 ) {
@@ -17,6 +19,7 @@ class MailService(
     return messageId
   }
 
+  @Transactional(readOnly = true)
   fun getEmails(since: String?, to: String?): MailDtos {
     val entities = since?.let {
       mailRepository.findByToAndAtAfter(
@@ -32,6 +35,7 @@ class MailService(
     return MailDtos.from(entities)
   }
 
+  @Transactional(readOnly = true)
   fun getEmails(page: Int, size: Int, to: String?): MailDtos {
     val entities = to?.let{
       mailRepository.findByToOrderByAtDesc(
