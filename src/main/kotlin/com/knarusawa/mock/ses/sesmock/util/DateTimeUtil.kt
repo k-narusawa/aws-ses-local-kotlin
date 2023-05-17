@@ -10,6 +10,10 @@ object DateTimeUtil {
     return LocalDateTime.now().minus(minutes, ChronoUnit.MINUTES)
   }
 
+  fun secondsAgo(seconds: Long): LocalDateTime {
+    return LocalDateTime.now().minus(seconds, ChronoUnit.SECONDS)
+  }
+
   fun timestampToLocalDateTime(timestamp: Long): LocalDateTime {
     val instant = Instant.ofEpochMilli(timestamp)
     return LocalDateTime.ofInstant(instant, ZoneId.systemDefault())

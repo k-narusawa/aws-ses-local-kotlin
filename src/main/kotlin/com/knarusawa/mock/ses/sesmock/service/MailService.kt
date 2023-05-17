@@ -49,4 +49,13 @@ class MailService(
   fun clearEmails() {
     mailRepository.deleteAll()
   }
+
+  fun batchClearEmails(page: Int, size: Int, seconds: Int): Int {
+    val pageEntity = mailRepository.findByAtBefore(
+      createdAt = DateTimeUtil.secondsAgo(seconds.toLong()),
+      pageable = PageRequest.of(page, size)
+    )
+    mailRepository.deleteAll(pageEntity)
+    return pageEntity.numberOfElements
+  }
 }
