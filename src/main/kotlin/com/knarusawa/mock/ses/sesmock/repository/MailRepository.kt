@@ -1,6 +1,6 @@
 package com.knarusawa.mock.ses.sesmock.repository
 
-import com.knarusawa.mock.ses.sesmock.domain.MailEntity
+import com.knarusawa.mock.ses.sesmock.domain.Mail
 import java.time.LocalDateTime
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -8,17 +8,17 @@ import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface MailRepository : CrudRepository<MailEntity, Long> {
+interface MailRepository : CrudRepository<Mail, Long> {
   fun findByToOrderByAtDesc(
     toAddress: String?,
     pageable: Pageable
-  ): Page<MailEntity>
+  ): Page<Mail>
 
   fun findByOrderByAtDesc(
     pageable: Pageable
-  ): Page<MailEntity>
+  ): Page<Mail>
 
-  fun findByAtBefore(createdAt: LocalDateTime, pageable: Pageable): Page<MailEntity>
+  fun findByAtBefore(createdAt: LocalDateTime, pageable: Pageable): Page<Mail>
 
-  fun findByToAndAtAfter(toAddress: String?, createdAt: LocalDateTime, pageable: Pageable): Page<MailEntity>
+  fun findByToAndAtAfter(toAddress: String?, createdAt: LocalDateTime, pageable: Pageable): Page<Mail>
 }

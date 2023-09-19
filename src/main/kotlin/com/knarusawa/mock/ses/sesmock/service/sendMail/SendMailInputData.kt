@@ -1,8 +1,9 @@
-package com.knarusawa.mock.ses.sesmock.domain
+package com.knarusawa.mock.ses.sesmock.service.sendMail
 
+import com.knarusawa.mock.ses.sesmock.domain.Mail
 import java.time.LocalDateTime
 
-data class SendMailRequestDto(
+data class SendMailInputData(
   val action: String,
 
   val version: String?,
@@ -59,7 +60,7 @@ data class SendMailRequestDto(
       source: String,
       sourceArn: String?,
       tags: String?,
-    ) = SendMailRequestDto(
+    ) = SendMailInputData(
       action = action,
       version = version,
       configurationSetName = configurationSetName,
@@ -80,16 +81,4 @@ data class SendMailRequestDto(
       tags = tags
     )
   }
-
-  fun toMailEntity(messageId: String) = MailEntity(
-    messageId = messageId,
-    from = source,
-    to = toAddress,
-    cc = ccAddress,
-    bcc = bccAddress,
-    subject = subjectData,
-    textBody = textData,
-    htmlBody = htmlData,
-    at = LocalDateTime.now()
-  )
 }

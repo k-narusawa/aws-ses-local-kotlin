@@ -1,8 +1,11 @@
 package com.knarusawa.mock.ses.sesmock.controller
 
-import com.knarusawa.mock.ses.sesmock.domain.MailDtos
-import com.knarusawa.mock.ses.sesmock.domain.SendMailRequestDto
-import com.knarusawa.mock.ses.sesmock.service.MailService
+import com.knarusawa.mock.ses.sesmock.dto.MailListDto
+import com.knarusawa.mock.ses.sesmock.service.sendMail.SendMailInputData
+import com.knarusawa.mock.ses.sesmock.service.batchClearMail.BatchClearMailService
+import com.knarusawa.mock.ses.sesmock.service.clearMail.ClearMailService
+import com.knarusawa.mock.ses.sesmock.service.getMailList.GetMailListService
+import com.knarusawa.mock.ses.sesmock.service.sendMail.SendMailService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -15,7 +18,10 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/")
 class SESRestController(
-  private val mailService: MailService
+  private val sendMailService: SendMailService,
+  private val getMailService: GetMailListService,
+  private val clearMailService: ClearMailService,
+  private val batchClearMailService: BatchClearMailService
 ) {
   @PostMapping
   @ResponseStatus(HttpStatus.OK)
@@ -39,7 +45,7 @@ class SESRestController(
     @RequestParam(name = "SourceArn") sourceArn: String?,
     @RequestParam(name = "Tags.member.1") tags: String?,
   ): String {
-    val sendMailRequestDto = SendMailRequestDto.of(
+    val sendMailInputData = SendMailInputData.of(
       action = action,
       version = version,
       configurationSetName = configurationSetName,
@@ -59,8 +65,8 @@ class SESRestController(
       sourceArn = sourceArn,
       tags = tags
     )
-    val messageId = mailService.sendEmail(
-      sendMailRequestDto = sendMailRequestDto
+    val messageId = sendMailService.exec(
+      inputData = sendMailInputData
     )
     return """
       <?xml version="1.0" encoding="UTF-8"?><SendEmailResponse xmlns="http://ses.amazonaws.com/doc/2010-12-01/"><SendEmailResult><MessageId>${messageId}</MessageId></SendEmailResult></SendEmailResponse>
@@ -72,8 +78,8 @@ class SESRestController(
   fun store(
     @RequestParam since: String?,
     @RequestParam to: String?
-  ): MailDtos {
-    return mailService.getEmails(since = since, to = to)
+  ): MailListDto {
+    return getMailService.exec(since = since, to = to)
   }
 
   @GetMapping("/emails")
@@ -82,8 +88,8 @@ class SESRestController(
     @RequestParam to: String?,
     @RequestParam(defaultValue = "0") page: Int,
     @RequestParam(defaultValue = "10") size: Int,
-  ): MailDtos {
-    return mailService.getEmails(
+  ): MailListDto {
+    return getMailService.exec(
       page = page,
       size = size,
       to = to,
@@ -93,7 +99,7 @@ class SESRestController(
   @PostMapping("/clear")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   fun clearEmails() {
-    mailService.clearEmails()
+    clearMailService.exec()
   }
 
   @DeleteMapping("/batch-clear")
@@ -103,7 +109,7 @@ class SESRestController(
     @RequestParam(defaultValue = "0") size: Int,
     @RequestParam(defaultValue = "300") seconds: Int
   ):Int {
-    return  mailService.batchClearEmails(
+    return  batchClearMailService.exec(
       page = page,
       size= size,
       seconds = seconds

@@ -4,33 +4,22 @@
     <meta charset="UTF-8" />
     <title>aws-ses-local</title>
     <link th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" rel="stylesheet" >
+    <style>
+        .mail-content {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 8px 0;
+            background: #f9f9f9;
+        }
+        .mail-subject, .mail-to, .mail-from, .mail-text, .mail-html, .mail-at {
+            font-weight: bold;
+        }
+    </style>
+
 </head>
 <body>
-<nav class="navbar navbar-dark bg-primary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">AWS-SES-LOCAL</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <form th:action="@{/}" method="get">
-                <div class="col-md">
-                    <div class="form-floating">
-                        <input type="email" class="form-control" id="floatingInputGrid" placeholder="sample@team-lab.com" th:name="to">
-                        <label for="floatingInputGrid">Email address</label>
-                    </div>
-                </div>
-            </form>
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Mail Clear
-                    </button>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<div th:insert="common/header :: header_fragment"></div>
 <table class="table">
     <thead>
         <tr>
@@ -52,22 +41,21 @@
         <th:block th:each="mail : ${mails.emails}">
             <h2 class="accordion-header" th:id="${mail.messageId}">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" th:data-bs-target="'#flush-' + ${mail.messageId}" aria-expanded="false" th:aria-controls="'flush-' + ${mail.messageId}">
-                    [[${mail.subject}]]
-                    to: [[${mail.destination.to[0]}]]
+                    [[${mail.subject}]] to: [[${mail.destination.to[0]}]]
                 </button>
             </h2>
             <div th:id="'flush-' + ${mail.messageId}" class="accordion-collapse collapse" th:aria-labelledby="${mail.messageId}" data-bs-parent="#accordionFlush">
-                <div class="accordion-body">
-                    <p>subject: [[${mail.subject}]]</p>
-                    <p>to: [[${mail.destination.to[0]}]]</p>
-                    <p>from: [[${mail.from}]]</p>
-                    <blockquote class="blockquote">
-                        <p>text:<br/> [[${mail.body.text}]]</p>
-                    </blockquote>
-                    <blockquote class="blockquote">
-                        <p>html:<br/> [[${mail.body.html}]]</p>
-                    </blockquote>
-                    <p>at: [[${mail.at}]]</p>
+                <div class="accordion-body mail-content">
+                    <p class="mail-subject">Subject: [[${mail.subject}]]</p>
+                    <p class="mail-to">To: [[${mail.destination.to[0]}]]</p>
+                    <p class="mail-from">From: [[${mail.from}]]</p>
+                    <p class="mail-text">Text:<br/>
+                        <span th:utext="${mail.body.viewText}"></span>
+                    </p>
+                    <p class="mail-html">HTML:<br/>
+                        <span th:utext="${mail.body.html}"></span>
+                    </p>
+                    <p class="mail-at">At: [[${mail.at}]]</p>
                 </div>
             </div>
         </th:block>
