@@ -1,7 +1,7 @@
 package com.knarusawa.mock.ses.sesmock.controller
 
 import com.knarusawa.mock.ses.sesmock.domain.MailListDto
-import com.knarusawa.mock.ses.sesmock.domain.SendMailRequestDto
+import com.knarusawa.mock.ses.sesmock.service.sendMail.SendMailInputData
 import com.knarusawa.mock.ses.sesmock.service.batchClearMail.BatchClearMailService
 import com.knarusawa.mock.ses.sesmock.service.clearMail.ClearMailService
 import com.knarusawa.mock.ses.sesmock.service.getMailList.GetMailListService
@@ -45,7 +45,7 @@ class SESRestController(
     @RequestParam(name = "SourceArn") sourceArn: String?,
     @RequestParam(name = "Tags.member.1") tags: String?,
   ): String {
-    val sendMailRequestDto = SendMailRequestDto.of(
+    val sendMailInputData = SendMailInputData.of(
       action = action,
       version = version,
       configurationSetName = configurationSetName,
@@ -66,7 +66,7 @@ class SESRestController(
       tags = tags
     )
     val messageId = sendMailService.exec(
-      sendMailRequestDto = sendMailRequestDto
+      sendMailInputData = sendMailInputData
     )
     return """
       <?xml version="1.0" encoding="UTF-8"?><SendEmailResponse xmlns="http://ses.amazonaws.com/doc/2010-12-01/"><SendEmailResult><MessageId>${messageId}</MessageId></SendEmailResult></SendEmailResponse>

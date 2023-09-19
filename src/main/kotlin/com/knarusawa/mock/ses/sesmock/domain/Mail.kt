@@ -36,4 +36,20 @@ data class Mail(
 
   @Column(name = "created_at")
   val at: LocalDateTime,
-)
+){
+  companion object{
+    fun of(messageId: String, source: String, toAddress: String?, ccAddress: String?, bccAddress: String?, subjectData: String, textData: String?, htmlData: String?): Mail{
+      return Mail(
+        messageId = messageId,
+        from = source,
+        to = toAddress,
+        cc = ccAddress,
+        bcc = bccAddress,
+        subject = subjectData,
+        textBody = textData,
+        htmlBody = htmlData,
+        at = LocalDateTime.now()
+      )
+    }
+  }
+}
