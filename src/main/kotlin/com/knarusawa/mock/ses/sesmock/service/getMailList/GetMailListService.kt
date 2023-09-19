@@ -1,6 +1,6 @@
 package com.knarusawa.mock.ses.sesmock.service.getMailList
 
-import com.knarusawa.mock.ses.sesmock.domain.MailListDto
+import com.knarusawa.mock.ses.sesmock.dto.MailListDto
 import com.knarusawa.mock.ses.sesmock.repository.MailRepository
 import com.knarusawa.mock.ses.sesmock.util.DateTimeUtil
 import org.springframework.data.domain.PageRequest

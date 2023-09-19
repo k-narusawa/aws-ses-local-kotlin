@@ -1,5 +1,6 @@
-package com.knarusawa.mock.ses.sesmock.domain
+package com.knarusawa.mock.ses.sesmock.dto
 
+import com.knarusawa.mock.ses.sesmock.domain.Mail
 import java.time.LocalDateTime
 
 data class MailDto(

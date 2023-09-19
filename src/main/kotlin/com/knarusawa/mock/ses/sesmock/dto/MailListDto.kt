@@ -1,5 +1,6 @@
-package com.knarusawa.mock.ses.sesmock.domain
+package com.knarusawa.mock.ses.sesmock.dto
 
+import com.knarusawa.mock.ses.sesmock.domain.Mail
 import org.springframework.data.domain.Page
 
 data class MailListDto(

@@ -1,6 +1,6 @@
 package com.knarusawa.mock.ses.sesmock.controller
 
-import com.knarusawa.mock.ses.sesmock.domain.MailListDto
+import com.knarusawa.mock.ses.sesmock.dto.MailListDto
 import com.knarusawa.mock.ses.sesmock.service.sendMail.SendMailInputData
 import com.knarusawa.mock.ses.sesmock.service.batchClearMail.BatchClearMailService
 import com.knarusawa.mock.ses.sesmock.service.clearMail.ClearMailService
