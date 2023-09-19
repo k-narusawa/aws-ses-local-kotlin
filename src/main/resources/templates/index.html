@@ -4,6 +4,19 @@
     <meta charset="UTF-8" />
     <title>aws-ses-local</title>
     <link th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" rel="stylesheet" >
+    <style>
+        .mail-content {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 8px 0;
+            background: #f9f9f9;
+        }
+        .mail-subject, .mail-to, .mail-from, .mail-text, .mail-html, .mail-at {
+            font-weight: bold;
+        }
+    </style>
+
 </head>
 <body>
 <div th:insert="common/header :: header_fragment"></div>
@@ -28,22 +41,21 @@
         <th:block th:each="mail : ${mails.emails}">
             <h2 class="accordion-header" th:id="${mail.messageId}">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" th:data-bs-target="'#flush-' + ${mail.messageId}" aria-expanded="false" th:aria-controls="'flush-' + ${mail.messageId}">
-                    [[${mail.subject}]]
-                    to: [[${mail.destination.to[0]}]]
+                    [[${mail.subject}]] to: [[${mail.destination.to[0]}]]
                 </button>
             </h2>
             <div th:id="'flush-' + ${mail.messageId}" class="accordion-collapse collapse" th:aria-labelledby="${mail.messageId}" data-bs-parent="#accordionFlush">
-                <div class="accordion-body">
-                    <p>subject: [[${mail.subject}]]</p>
-                    <p>to: [[${mail.destination.to[0]}]]</p>
-                    <p>from: [[${mail.from}]]</p>
-                    <blockquote class="blockquote">
-                        <p>text:<br/> [[${mail.body.text}]]</p>
-                    </blockquote>
-                    <blockquote class="blockquote">
-                        <p>html:<br/> [[${mail.body.html}]]</p>
-                    </blockquote>
-                    <p>at: [[${mail.at}]]</p>
+                <div class="accordion-body mail-content">
+                    <p class="mail-subject">Subject: [[${mail.subject}]]</p>
+                    <p class="mail-to">To: [[${mail.destination.to[0]}]]</p>
+                    <p class="mail-from">From: [[${mail.from}]]</p>
+                    <p class="mail-text">Text:<br/>
+                        <span th:utext="${mail.body.viewText}"></span>
+                    </p>
+                    <p class="mail-html">HTML:<br/>
+                        <span th:utext="${mail.body.html}"></span>
+                    </p>
+                    <p class="mail-at">At: [[${mail.at}]]</p>
                 </div>
             </div>
         </th:block>

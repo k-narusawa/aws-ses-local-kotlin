@@ -1,6 +1,7 @@
 package com.knarusawa.mock.ses.sesmock.dto
 
 import com.knarusawa.mock.ses.sesmock.domain.Mail
+import com.knarusawa.mock.ses.sesmock.util.StringUtil
 import java.time.LocalDateTime
 
 data class MailDto(
@@ -16,39 +17,25 @@ data class MailDto(
     val to: List<String?>,
     val cc: List<String?>,
     val bcc: List<String?>
-  ) {
-    companion object {
-      fun of(to: String?, cc: String?, bcc: String?) = Destination(
-        to = listOf(to),
-        cc = listOf(cc),
-        bcc = listOf(bcc)
-      )
-    }
-  }
+  )
 
   data class Body(
     val text: String?,
+    val viewText: String? = StringUtil.convertTextToHtml(text ?: ""),
     val html: String?,
-  ) {
-    companion object {
-      fun of(text: String?, html: String?) = Body(
-        text = text,
-        html = html
-      )
-    }
-  }
+  )
 
   companion object {
     fun from(mail: Mail) = MailDto(
       messageId = mail.messageId,
       from = mail.from,
-      destination = Destination.of(
-        to = mail.to,
-        cc = mail.cc,
-        bcc = mail.bcc,
+      destination = Destination(
+        to = listOf(mail.to),
+        cc = listOf(mail.cc),
+        bcc = listOf(mail.bcc),
       ),
       subject = mail.subject,
-      body = Body.of(
+      body = Body(
         text = mail.textBody,
         html = mail.htmlBody,
       ),
