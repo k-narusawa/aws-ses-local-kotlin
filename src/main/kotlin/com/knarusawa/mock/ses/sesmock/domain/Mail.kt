@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(name = "ses_mock")
-data class MailEntity(
+data class Mail(
   @Id
   @Column(name = "message_id")
   val messageId: String,

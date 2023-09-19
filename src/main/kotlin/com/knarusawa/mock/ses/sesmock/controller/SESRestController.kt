@@ -1,6 +1,6 @@
 package com.knarusawa.mock.ses.sesmock.controller
 
-import com.knarusawa.mock.ses.sesmock.domain.MailDtos
+import com.knarusawa.mock.ses.sesmock.domain.MailListDto
 import com.knarusawa.mock.ses.sesmock.domain.SendMailRequestDto
 import com.knarusawa.mock.ses.sesmock.service.MailService
 import org.springframework.http.HttpStatus
@@ -72,7 +72,7 @@ class SESRestController(
   fun store(
     @RequestParam since: String?,
     @RequestParam to: String?
-  ): MailDtos {
+  ): MailListDto {
     return mailService.getEmails(since = since, to = to)
   }
 
@@ -82,7 +82,7 @@ class SESRestController(
     @RequestParam to: String?,
     @RequestParam(defaultValue = "0") page: Int,
     @RequestParam(defaultValue = "10") size: Int,
-  ): MailDtos {
+  ): MailListDto {
     return mailService.getEmails(
       page = page,
       size = size,

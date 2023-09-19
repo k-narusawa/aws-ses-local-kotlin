@@ -81,7 +81,7 @@ data class SendMailRequestDto(
     )
   }
 
-  fun toMailEntity(messageId: String) = MailEntity(
+  fun toMailEntity(messageId: String) = Mail(
     messageId = messageId,
     from = source,
     to = toAddress,

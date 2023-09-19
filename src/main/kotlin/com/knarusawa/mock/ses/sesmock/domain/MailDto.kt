@@ -38,20 +38,20 @@ data class MailDto(
   }
 
   companion object {
-    fun from(mailEntity: MailEntity) = MailDto(
-      messageId = mailEntity.messageId,
-      from = mailEntity.from,
+    fun from(mail: Mail) = MailDto(
+      messageId = mail.messageId,
+      from = mail.from,
       destination = Destination.of(
-        to = mailEntity.to,
-        cc = mailEntity.cc,
-        bcc = mailEntity.bcc,
+        to = mail.to,
+        cc = mail.cc,
+        bcc = mail.bcc,
       ),
-      subject = mailEntity.subject,
+      subject = mail.subject,
       body = Body.of(
-        text = mailEntity.textBody,
-        html = mailEntity.htmlBody,
+        text = mail.textBody,
+        html = mail.htmlBody,
       ),
-      at = mailEntity.at
+      at = mail.at
     )
   }
 }

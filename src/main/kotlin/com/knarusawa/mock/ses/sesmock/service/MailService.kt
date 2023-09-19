@@ -1,6 +1,6 @@
 package com.knarusawa.mock.ses.sesmock.service
 
-import com.knarusawa.mock.ses.sesmock.domain.MailDtos
+import com.knarusawa.mock.ses.sesmock.domain.MailListDto
 import com.knarusawa.mock.ses.sesmock.domain.SendMailRequestDto
 import com.knarusawa.mock.ses.sesmock.repository.MailRepository
 import com.knarusawa.mock.ses.sesmock.util.DateTimeUtil
@@ -20,7 +20,7 @@ class MailService(
   }
 
   @Transactional(readOnly = true)
-  fun getEmails(since: String?, to: String?): MailDtos {
+  fun getEmails(since: String?, to: String?): MailListDto {
     val entities = since?.let {
       mailRepository.findByToAndAtAfter(
         toAddress = to,
@@ -32,18 +32,18 @@ class MailService(
       createdAt = DateTimeUtil.minutesAgo(5L),
       pageable = PageRequest.of(0, 1000)
     )
-    return MailDtos.from(entities)
+    return MailListDto.from(entities)
   }
 
   @Transactional(readOnly = true)
-  fun getEmails(page: Int, size: Int, to: String?): MailDtos {
+  fun getEmails(page: Int, size: Int, to: String?): MailListDto {
     val entities = to?.let{
       mailRepository.findByToOrderByAtDesc(
         toAddress = to,
         pageable = PageRequest.of(page, size)
       )
     } ?: mailRepository.findByOrderByAtDesc(pageable = PageRequest.of(page, size))
-    return MailDtos.from(entities)
+    return MailListDto.from(entities)
   }
 
   fun clearEmails() {
