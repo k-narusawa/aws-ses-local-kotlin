@@ -2,7 +2,10 @@ package com.knarusawa.mock.ses.sesmock.controller
 
 import com.knarusawa.mock.ses.sesmock.domain.MailListDto
 import com.knarusawa.mock.ses.sesmock.domain.SendMailRequestDto
-import com.knarusawa.mock.ses.sesmock.service.MailService
+import com.knarusawa.mock.ses.sesmock.service.batchClearMail.BatchClearMailService
+import com.knarusawa.mock.ses.sesmock.service.clearMail.ClearMailService
+import com.knarusawa.mock.ses.sesmock.service.getMailList.GetMailListService
+import com.knarusawa.mock.ses.sesmock.service.sendMail.SendMailService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -15,7 +18,10 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/")
 class SESRestController(
-  private val mailService: MailService
+  private val sendMailService: SendMailService,
+  private val getMailService: GetMailListService,
+  private val clearMailService: ClearMailService,
+  private val batchClearMailService: BatchClearMailService
 ) {
   @PostMapping
   @ResponseStatus(HttpStatus.OK)
@@ -59,7 +65,7 @@ class SESRestController(
       sourceArn = sourceArn,
       tags = tags
     )
-    val messageId = mailService.sendEmail(
+    val messageId = sendMailService.exec(
       sendMailRequestDto = sendMailRequestDto
     )
     return """
@@ -73,7 +79,7 @@ class SESRestController(
     @RequestParam since: String?,
     @RequestParam to: String?
   ): MailListDto {
-    return mailService.getEmails(since = since, to = to)
+    return getMailService.exec(since = since, to = to)
   }
 
   @GetMapping("/emails")
@@ -83,7 +89,7 @@ class SESRestController(
     @RequestParam(defaultValue = "0") page: Int,
     @RequestParam(defaultValue = "10") size: Int,
   ): MailListDto {
-    return mailService.getEmails(
+    return getMailService.exec(
       page = page,
       size = size,
       to = to,
@@ -93,7 +99,7 @@ class SESRestController(
   @PostMapping("/clear")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   fun clearEmails() {
-    mailService.clearEmails()
+    clearMailService.exec()
   }
 
   @DeleteMapping("/batch-clear")
@@ -103,7 +109,7 @@ class SESRestController(
     @RequestParam(defaultValue = "0") size: Int,
     @RequestParam(defaultValue = "300") seconds: Int
   ):Int {
-    return  mailService.batchClearEmails(
+    return  batchClearMailService.exec(
       page = page,
       size= size,
       seconds = seconds

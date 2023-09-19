@@ -1,6 +1,8 @@
 package com.knarusawa.mock.ses.sesmock.controller
 
-import com.knarusawa.mock.ses.sesmock.service.MailService
+import com.knarusawa.mock.ses.sesmock.service.batchClearMail.BatchClearMailService
+import com.knarusawa.mock.ses.sesmock.service.clearMail.ClearMailService
+import com.knarusawa.mock.ses.sesmock.service.getMailList.GetMailListService
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
@@ -11,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam
 @Controller
 @RequestMapping("/")
 class SESController(
-    private val mailService: MailService
+    private val clearMailService: ClearMailService,
+    private val getMailListService: GetMailListService
 ) {
     @GetMapping
     fun index(
@@ -20,7 +23,7 @@ class SESController(
         @RequestParam(name = "page", defaultValue = "1") page: Int,
         @RequestParam(name = "size", defaultValue = "10") size: Int,
     ): String {
-        val entities = mailService.getEmails(page = page - 1, size=size, to = to)
+        val entities = getMailListService.exec(page = page - 1, size=size, to = to)
         model.addAttribute("mails", entities)
         model.addAttribute("to", to)
         return "index"
@@ -28,7 +31,7 @@ class SESController(
 
     @PostMapping("/clear-all")
     fun clear(): String {
-        mailService.clearEmails()
+        clearMailService.exec()
         return "redirect:/"
     }
 }
