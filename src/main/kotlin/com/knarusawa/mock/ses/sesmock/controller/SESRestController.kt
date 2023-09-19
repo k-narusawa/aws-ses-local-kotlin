@@ -1,10 +1,10 @@
 package com.knarusawa.mock.ses.sesmock.controller
 
 import com.knarusawa.mock.ses.sesmock.dto.MailListDto
-import com.knarusawa.mock.ses.sesmock.service.sendMail.SendMailInputData
 import com.knarusawa.mock.ses.sesmock.service.batchClearMail.BatchClearMailService
 import com.knarusawa.mock.ses.sesmock.service.clearMail.ClearMailService
 import com.knarusawa.mock.ses.sesmock.service.getMailList.GetMailListService
+import com.knarusawa.mock.ses.sesmock.service.sendMail.SendMailInputData
 import com.knarusawa.mock.ses.sesmock.service.sendMail.SendMailService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -108,10 +108,10 @@ class SESRestController(
     @RequestParam(defaultValue = "0") page: Int,
     @RequestParam(defaultValue = "0") size: Int,
     @RequestParam(defaultValue = "300") seconds: Int
-  ):Int {
-    return  batchClearMailService.exec(
+  ): Int {
+    return batchClearMailService.exec(
       page = page,
-      size= size,
+      size = size,
       seconds = seconds
     )
   }

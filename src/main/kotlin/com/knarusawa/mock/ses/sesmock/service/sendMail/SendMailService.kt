@@ -7,21 +7,21 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class SendMailService(
-  private val mailRepository: MailRepository
+    private val mailRepository: MailRepository
 ) {
   @Transactional
   fun exec(inputData: SendMailInputData): String {
     val messageId = "ses-${(Math.random() * 900000000 + 100000000).toInt()}"
 
     val mail = Mail.of(
-      messageId = messageId,
-      from = inputData.source,
-      to = inputData.toAddress,
-      cc = inputData.ccAddress,
-      bcc = inputData.bccAddress,
-      subject = inputData.subjectData,
-      textBody = inputData.textData,
-      htmlBody = inputData.htmlData,
+        messageId = messageId,
+        from = inputData.source,
+        to = inputData.toAddress,
+        cc = inputData.ccAddress,
+        bcc = inputData.bccAddress,
+        subject = inputData.subjectData,
+        textBody = inputData.textData,
+        htmlBody = inputData.htmlData,
     )
 
     mailRepository.save(mail)

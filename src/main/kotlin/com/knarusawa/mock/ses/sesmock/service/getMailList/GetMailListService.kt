@@ -10,30 +10,30 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class GetMailListService(
-  private val mailRepository: MailRepository
+    private val mailRepository: MailRepository
 ) {
   @Transactional(readOnly = true)
   fun exec(since: String?, to: String?): MailListDto {
     val entities = since?.let {
       mailRepository.findByToAndAtAfter(
-        toAddress = to,
-        createdAt = DateTimeUtil.timestampToLocalDateTime(it.toLong()),
-        pageable = PageRequest.of(0, 1000)
+          toAddress = to,
+          createdAt = DateTimeUtil.timestampToLocalDateTime(it.toLong()),
+          pageable = PageRequest.of(0, 1000)
       )
     } ?: mailRepository.findByToAndAtAfter(
-      toAddress = to,
-      createdAt = DateTimeUtil.minutesAgo(5L),
-      pageable = PageRequest.of(0, 1000)
+        toAddress = to,
+        createdAt = DateTimeUtil.minutesAgo(5L),
+        pageable = PageRequest.of(0, 1000)
     )
     return MailListDto.from(entities)
   }
 
   @Transactional(readOnly = true)
   fun exec(page: Int, size: Int, to: String?): MailListDto {
-    val entities = to?.let{
+    val entities = to?.let {
       mailRepository.findByToOrderByAtDesc(
-        toAddress = to,
-        pageable = PageRequest.of(page, size)
+          toAddress = to,
+          pageable = PageRequest.of(page, size)
       )
     } ?: mailRepository.findByOrderByAtDesc(pageable = PageRequest.of(page, size))
     return MailListDto.from(entities)
