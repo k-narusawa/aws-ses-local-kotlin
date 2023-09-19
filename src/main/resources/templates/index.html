@@ -1,9 +1,9 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>aws-ses-local</title>
-    <link th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" rel="stylesheet" >
+    <link th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" rel="stylesheet">
     <style>
         .mail-content {
             border: 1px solid #ccc;
@@ -12,8 +12,15 @@
             margin: 8px 0;
             background: #f9f9f9;
         }
+
         .mail-subject, .mail-to, .mail-from, .mail-text, .mail-html, .mail-at {
             font-weight: bold;
+        }
+
+        .select-small {
+            width: 100px;
+            margin: 0 auto;
+            text-align: center;
         }
     </style>
 
@@ -22,29 +29,32 @@
 <div th:insert="common/header :: header_fragment"></div>
 <table class="table">
     <thead>
-        <tr>
-            <th scope="col">currentPage</th>
-            <th scope="col">totalPage</th>
-            <th scope="col">totalElements</th>
-        </tr>
+    <tr>
+        <th scope="col">currentPage</th>
+        <th scope="col">totalPage</th>
+        <th scope="col">totalElements</th>
+    </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>[[${mails.currentPage + 1}]]</td>
-            <td>[[${mails.totalPage}]]</td>
-            <td>[[${mails.totalElements}]]</td>
-        </tr>
+    <tr>
+        <td>[[${mails.currentPage + 1}]]</td>
+        <td>[[${mails.totalPage}]]</td>
+        <td>[[${mails.totalElements}]]</td>
+    </tr>
     </tbody>
 </table>
 <div class="accordion accordion-flush" id="accordionFlush">
     <div class="accordion-item">
         <th:block th:each="mail : ${mails.emails}">
             <h2 class="accordion-header" th:id="${mail.messageId}">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" th:data-bs-target="'#flush-' + ${mail.messageId}" aria-expanded="false" th:aria-controls="'flush-' + ${mail.messageId}">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        th:data-bs-target="'#flush-' + ${mail.messageId}" aria-expanded="false"
+                        th:aria-controls="'flush-' + ${mail.messageId}">
                     [[${mail.subject}]] to: [[${mail.destination.to[0]}]]
                 </button>
             </h2>
-            <div th:id="'flush-' + ${mail.messageId}" class="accordion-collapse collapse" th:aria-labelledby="${mail.messageId}" data-bs-parent="#accordionFlush">
+            <div th:id="'flush-' + ${mail.messageId}" class="accordion-collapse collapse"
+                 th:aria-labelledby="${mail.messageId}" data-bs-parent="#accordionFlush">
                 <div class="accordion-body mail-content">
                     <p class="mail-subject">Subject: [[${mail.subject}]]</p>
                     <p class="mail-to">To: [[${mail.destination.to[0]}]]</p>
@@ -62,19 +72,17 @@
     </div>
 </div>
 <th:block th:if="${mails.totalPage > 0}">
-    <nav aria-label="Page navigation sticky-md-bottom">
-        <ul class="pagination d-flex justify-content-center align-items-center">
-            <li class="page-item" th:classappend="${mails.currentPage == 0} ? 'disabled' : ''">
-                <a class="page-link" th:href="@{'?page=' + ${mails.currentPage}}">&laquo;</a>
-            </li>
-            <li class="page-item" th:each="page : ${#numbers.sequence(1, mails.totalPage)}" th:classappend="${mails.currentPage + 1 == page} ? 'active' : ''">
-                <a class="page-link" th:href="@{'?page='+ ${page}}" th:text="${page}"></a>
-            </li>
-            <li class="page-item" th:classappend="${mails.currentPage + 1 == mails.totalPage} ? 'disabled' : ''">
-                <a class="page-link" th:href="@{'?page=' + ${mails.currentPage + 2}}">&raquo;</a>
-            </li>
-        </ul>
-    </nav>
+    <form th:action="@{''}" method="get">
+        <div class="form-group">
+            <select class="form-control select-small" id="pageSelect" name="page" onchange="this.form.submit()">
+                <option th:each="page : ${#numbers.sequence(0, mails.totalPage - 1)}"
+                        th:value="${page + 1}"
+                        th:text="${page + 1}"
+                        th:selected="${page == mails.currentPage}">
+                </option>
+            </select>
+        </div>
+    </form>
 </th:block>
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -87,7 +95,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <form th:action="@{'/clear-all'}" th:method="post" data-bs-dismiss="modal">
-                    <input type="hidden" name="_method" />
+                    <input type="hidden" name="_method"/>
                     <button type="submit" class="btn btn-danger">Mail Clear</button>
                 </form>
             </div>
