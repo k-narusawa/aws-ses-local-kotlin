@@ -66,7 +66,7 @@ class SESRestController(
       tags = tags
     )
     val messageId = sendMailService.exec(
-      sendMailInputData = sendMailInputData
+      inputData = sendMailInputData
     )
     return """
       <?xml version="1.0" encoding="UTF-8"?><SendEmailResponse xmlns="http://ses.amazonaws.com/doc/2010-12-01/"><SendEmailResult><MessageId>${messageId}</MessageId></SendEmailResult></SendEmailResponse>

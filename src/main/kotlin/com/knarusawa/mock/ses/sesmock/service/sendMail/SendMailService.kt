@@ -10,18 +10,18 @@ class SendMailService(
   private val mailRepository: MailRepository
 ) {
   @Transactional
-  fun exec(sendMailInputData: SendMailInputData): String {
+  fun exec(inputData: SendMailInputData): String {
     val messageId = "ses-${(Math.random() * 900000000 + 100000000).toInt()}"
 
     val mail = Mail.of(
       messageId = messageId,
-      source = sendMailInputData.source,
-      toAddress = sendMailInputData.toAddress,
-      ccAddress = sendMailInputData.ccAddress,
-      bccAddress = sendMailInputData.bccAddress,
-      subjectData = sendMailInputData.subjectData,
-      textData = sendMailInputData.textData,
-      htmlData = sendMailInputData.htmlData,
+      from = inputData.source,
+      to = inputData.toAddress,
+      cc = inputData.ccAddress,
+      bcc = inputData.bccAddress,
+      subject = inputData.subjectData,
+      textBody = inputData.textData,
+      htmlBody = inputData.htmlData,
     )
 
     mailRepository.save(mail)

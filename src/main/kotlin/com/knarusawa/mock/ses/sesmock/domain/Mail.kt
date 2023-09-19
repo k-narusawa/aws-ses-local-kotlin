@@ -5,10 +5,9 @@ import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import jakarta.persistence.Table
 import java.time.LocalDateTime
-
 @Entity
 @Table(name = "ses_mock")
-data class Mail(
+class Mail private constructor(
   @Id
   @Column(name = "message_id")
   val messageId: String,
@@ -35,19 +34,28 @@ data class Mail(
   val htmlBody: String?,
 
   @Column(name = "created_at")
-  val at: LocalDateTime,
-){
-  companion object{
-    fun of(messageId: String, source: String, toAddress: String?, ccAddress: String?, bccAddress: String?, subjectData: String, textData: String?, htmlData: String?): Mail{
+  val at: LocalDateTime
+) {
+  companion object {
+    fun of(
+      messageId: String,
+      from: String,
+      to: String?,
+      cc: String?,
+      bcc: String?,
+      subject: String,
+      textBody: String?,
+      htmlBody: String?
+    ): Mail {
       return Mail(
         messageId = messageId,
-        from = source,
-        to = toAddress,
-        cc = ccAddress,
-        bcc = bccAddress,
-        subject = subjectData,
-        textBody = textData,
-        htmlBody = htmlData,
+        from = from,
+        to = to,
+        cc = cc,
+        bcc = bcc,
+        subject = subject,
+        textBody = textBody,
+        htmlBody = htmlBody,
         at = LocalDateTime.now()
       )
     }
