@@ -10,10 +10,7 @@ services:
       MYSQL_PASSWORD: docker
       TZ: 'Asia/Tokyo'
     volumes:
-      - ./docker/db/data:/var/lib/mysql
-      - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
-      - ./docker/db/sql:/docker-entrypoint-initdb.d
-    user: 1000:1000
+      - ./docker/mysql:/var/lib/mysql
     ports:
       - "13306:3306"
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
