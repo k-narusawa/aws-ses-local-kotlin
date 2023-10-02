@@ -1,4 +1,4 @@
-package com.knarusawa.mock.ses.sesmock.controller
+package com.knarusawa.mock.ses.sesmock.infrastructure.controller
 
 import com.knarusawa.mock.ses.sesmock.service.clearMail.ClearMailService
 import com.knarusawa.mock.ses.sesmock.service.getMailList.GetMailListService

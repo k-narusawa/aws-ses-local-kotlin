@@ -1,6 +1,6 @@
 package com.knarusawa.mock.ses.sesmock.service.batchClearMail
 
-import com.knarusawa.mock.ses.sesmock.repository.MailRepository
+import com.knarusawa.mock.ses.sesmock.infrastructure.repository.MailRepository
 import com.knarusawa.mock.ses.sesmock.util.DateTimeUtil
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service

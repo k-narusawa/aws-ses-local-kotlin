@@ -1,7 +1,7 @@
 package com.knarusawa.mock.ses.sesmock.service.sendMail
 
 import com.knarusawa.mock.ses.sesmock.domain.Mail
-import com.knarusawa.mock.ses.sesmock.repository.MailRepository
+import com.knarusawa.mock.ses.sesmock.infrastructure.repository.MailRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
