@@ -1,26 +1,25 @@
 # aws-ses-local-kotlin
 
-## API一覧
+## List of APIs
 
-* メール一覧
+* List Emails
 
 ```shell
 curl --location 'http://127.0.0.1:8080/store?since=1683448121000'
 ```
 
-* メール検索
+* Search Emails
 
 ```shell
 curl --location 'http://127.0.0.1:8080/emails?page=0&size=3&to=recipient%40example.com'
 ```
 
-* メールクリア
-
+* Clear Emails
 ```shell
 curl --location --request POST 'http://127.0.0.1:8080/clear'
 ```
 
-## サンプル(docker-compose)
+## Sample (docker-compose)
 
 ```yaml
 version: '3'
