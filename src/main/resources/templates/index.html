@@ -13,7 +13,9 @@
             margin: 8px 0;
             background: #f9f9f9;
         }
-
+        .mail-subject{
+            font-size: 1.2rem;
+        }
         .mail-subject, .mail-to, .mail-from, .mail-text, .mail-html, .mail-at {
             font-weight: bold;
         }
@@ -66,7 +68,7 @@
                 <div th:id="'flush-' + ${mail.messageId}" class="accordion-collapse collapse"
                      th:aria-labelledby="${mail.messageId}" data-bs-parent="#accordionFlush">
                     <div class="accordion-body mail-content">
-                        <p class="mail-subject">Subject: [[${mail.subject}]]</p>
+                        <p class="mail-subject"> [[${mail.subject}]]</p>
                         <p class="mail-to">To: [[${mail.destination.to[0]}]]</p>
                         <p class="mail-from">From: [[${mail.from}]]</p>
                         <p class="mail-text">Text:<br/>
