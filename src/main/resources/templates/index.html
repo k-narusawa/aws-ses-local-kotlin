@@ -84,17 +84,35 @@
         </div>
     </div>
     <th:block th:if="${mails.totalPage > 0}">
-        <form th:action="@{''}" method="get">
-            <div class="form-group">
-                <select class="form-control select-small" id="pageSelect" name="page" onchange="this.form.submit()">
-                    <option th:each="page : ${#numbers.sequence(0, mails.totalPage - 1)}"
-                            th:value="${page + 1}"
-                            th:text="${page + 1}"
-                            th:selected="${page == mails.currentPage}">
-                    </option>
-                </select>
-            </div>
-        </form>
+        <div class="d-flex align-items-center justify-content-center">
+            <a th:if="${mails.currentPage > 0}"
+               th:href="@{'?page=' + ${mails.currentPage}}"
+               class="mx-2">
+                <i class="fa-solid fa-arrow-left fa-beat" style="color: #005eff;"></i>
+            </a>
+            <span th:unless="${mails.currentPage > 0}" class="mx-2" style="visibility: hidden;">
+               <i class="fa-solid fa-arrow-left" style="color: #005eff;"></i>
+            </span>
+            <form th:action="@{''}" method="get" class="d-inline-block mb-0">
+                <div class="form-group">
+                    <select class="form-control select-small" id="pageSelect" name="page" onchange="this.form.submit()">
+                        <option th:each="page : ${#numbers.sequence(0, mails.totalPage - 1)}"
+                                th:value="${page + 1}"
+                                th:text="${page + 1}"
+                                th:selected="${page == mails.currentPage}">
+                        </option>
+                    </select>
+                </div>
+            </form>
+            <a th:if="${mails.currentPage + 1 < mails.totalPage}"
+               th:href="@{'?page=' + ${mails.currentPage + 2}}"
+               class="mx-2">
+                <i class="fa-solid fa-arrow-right fa-beat" style="color: #005eff;"></i>
+            </a>
+            <span th:unless="${mails.currentPage + 1 < mails.totalPage}" class="mx-2" style="visibility: hidden;">
+               <i class="fa-solid fa-arrow-right" style="color: #005eff;"></i>
+            </span>
+        </div>
     </th:block>
     <div class="footer">
         <div class="container text-center">

@@ -20,7 +20,7 @@ class SESController(
       model: Model,
       @RequestParam(name = "to") to: String? = null,
       @RequestParam(name = "page", defaultValue = "1") page: Int,
-      @RequestParam(name = "size", defaultValue = "10") size: Int,
+      @RequestParam(name = "size", defaultValue = "1") size: Int,
   ): String {
     val entities = getMailListService.exec(page = page - 1, size = size, to = to)
     model.addAttribute("mails", entities)
