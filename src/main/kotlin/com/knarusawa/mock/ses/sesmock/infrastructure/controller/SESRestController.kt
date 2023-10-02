@@ -1,4 +1,4 @@
-package com.knarusawa.mock.ses.sesmock.controller
+package com.knarusawa.mock.ses.sesmock.infrastructure.controller
 
 import com.knarusawa.mock.ses.sesmock.dto.MailListDto
 import com.knarusawa.mock.ses.sesmock.service.batchClearMail.BatchClearMailService
