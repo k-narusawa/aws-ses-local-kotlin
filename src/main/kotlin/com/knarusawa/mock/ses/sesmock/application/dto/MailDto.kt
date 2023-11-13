@@ -1,4 +1,4 @@
-package com.knarusawa.mock.ses.sesmock.application.service.dto
+package com.knarusawa.mock.ses.sesmock.application.dto
 
 import com.knarusawa.mock.ses.sesmock.domain.Mail
 import com.knarusawa.mock.ses.sesmock.util.StringUtil

@@ -25,6 +25,7 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-reflect'
     implementation 'mysql:mysql-connector-java:8.0.33'
     implementation 'org.webjars:bootstrap:5.2.3'
+    implementation 'com.sun.mail:javax.mail:1.6.2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

@@ -1,11 +1,13 @@
 package com.knarusawa.mock.ses.sesmock.infrastructure.controller
 
-import com.knarusawa.mock.ses.sesmock.dto.MailListDto
-import com.knarusawa.mock.ses.sesmock.service.batchClearMail.BatchClearMailService
-import com.knarusawa.mock.ses.sesmock.service.clearMail.ClearMailService
-import com.knarusawa.mock.ses.sesmock.service.getMailList.GetMailListService
-import com.knarusawa.mock.ses.sesmock.service.sendMail.SendMailInputData
-import com.knarusawa.mock.ses.sesmock.service.sendMail.SendMailService
+import com.knarusawa.mock.ses.sesmock.application.dto.MailListDto
+import com.knarusawa.mock.ses.sesmock.application.service.batchClearMail.BatchClearMailService
+import com.knarusawa.mock.ses.sesmock.application.service.clearMail.ClearMailService
+import com.knarusawa.mock.ses.sesmock.application.service.getMailList.GetMailListService
+import com.knarusawa.mock.ses.sesmock.application.service.v1.sendEmail.SendEmailInputData
+import com.knarusawa.mock.ses.sesmock.application.service.v1.sendEmail.SendEmailService
+import com.knarusawa.mock.ses.sesmock.application.service.v1.sendRawEmail.SendRawEmailInputData
+import com.knarusawa.mock.ses.sesmock.application.service.v1.sendRawEmail.SendRawEmailSendService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -18,10 +20,11 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/")
 class SESRestController(
-  private val sendMailService: SendMailService,
-  private val getMailService: GetMailListService,
-  private val clearMailService: ClearMailService,
-  private val batchClearMailService: BatchClearMailService
+        private val sendEmailService: SendEmailService,
+        private val sendRawEmailSendService: SendRawEmailSendService,
+        private val getMailService: GetMailListService,
+        private val clearMailService: ClearMailService,
+        private val batchClearMailService: BatchClearMailService
 ) {
   @PostMapping
   @ResponseStatus(HttpStatus.OK)
@@ -36,41 +39,64 @@ class SESRestController(
     @RequestParam(name = "Message.Body.Html.Charset") htmlCharset: String?,
     @RequestParam(name = "Message.Body.Text.Data") textData: String?,
     @RequestParam(name = "Message.Body.Text.Charset") textCharset: String?,
-    @RequestParam(name = "Message.Subject.Data") subjectData: String,
+    @RequestParam(name = "Message.Subject.Data") subjectData: String?,
     @RequestParam(name = "Message.Subject.Charset") subjectCharset: String?,
     @RequestParam(name = "ReplyToAddresses.member.1") replyToAddress: String?,
     @RequestParam(name = "ReturnPath") returnPath: String?,
     @RequestParam(name = "ReturnPathArn") returnPathArn: String?,
-    @RequestParam(name = "Source") source: String,
+    @RequestParam(name = "Source") source: String?,
     @RequestParam(name = "SourceArn") sourceArn: String?,
     @RequestParam(name = "Tags.member.1") tags: String?,
+    // SendRawEmail
+    @RequestParam(name = "Destination.member.1") member: String?,
+    @RequestParam(name = "FromArn") fromArn: String?,
+    @RequestParam(name = "RawMessage.Data") rawMessageData: String?,
   ): String {
-    val sendMailInputData = SendMailInputData.of(
-      action = action,
-      version = version,
-      configurationSetName = configurationSetName,
-      toAddress = toAddress,
-      ccAddress = ccAddress,
-      bccAddress = bccAddress,
-      htmlData = htmlData,
-      htmlCharset = htmlCharset,
-      textData = textData,
-      textCharset = textCharset,
-      subjectData = subjectData,
-      subjectCharset = subjectCharset,
-      replyToAddress = replyToAddress,
-      returnPath = returnPath,
-      returnPathArn = returnPathArn,
-      source = source,
-      sourceArn = sourceArn,
-      tags = tags
-    )
-    val messageId = sendMailService.exec(
-      inputData = sendMailInputData
-    )
-    return """
+    if(action == "SendEmail"){
+      val sendEmailInputData = SendEmailInputData.of(
+              version = version,
+              configurationSetName = configurationSetName,
+              toAddress = toAddress,
+              ccAddress = ccAddress,
+              bccAddress = bccAddress,
+              htmlData = htmlData,
+              htmlCharset = htmlCharset,
+              textData = textData,
+              textCharset = textCharset,
+              subjectData = subjectData!!, // SendEmailの場合は必ず存在する
+              subjectCharset = subjectCharset,
+              replyToAddress = replyToAddress,
+              returnPath = returnPath,
+              returnPathArn = returnPathArn,
+              source = source!!,  // SendEmailの場合は必ず存在する
+              sourceArn = sourceArn,
+              tags = tags
+      )
+      val messageId = sendEmailService.exec(
+              inputData = sendEmailInputData
+      )
+      return """
       <?xml version="1.0" encoding="UTF-8"?><SendEmailResponse xmlns="http://ses.amazonaws.com/doc/2010-12-01/"><SendEmailResult><MessageId>${messageId}</MessageId></SendEmailResult></SendEmailResponse>
     """.trimIndent()
+    }
+
+    if(action == "SendRawEmail"){
+      val inputData = SendRawEmailInputData.of(
+              version = version,
+              configurationSetName = configurationSetName,
+              rawMessageData = rawMessageData!! // SendRawEmailの場合は必ず存在する
+      )
+
+      val messageId = sendRawEmailSendService.exec(
+              inputData = inputData
+      )
+
+      return """
+        <?xml version="1.0" encoding="UTF-8"?><SendRawEmailResponse xmlns="http://ses.amazonaws.com/doc/2010-12-01/"><SendRawEmailResult><MessageId>${messageId}</MessageId></SendRawEmailResult></SendRawEmailResponse>
+      """.trimIndent()
+    }
+
+    throw RuntimeException("Not implemented")
   }
 
   @GetMapping("/store")

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 
 @ControllerAdvice
-class ExceptionHandler {
+class WebUIExceptionHandler {
   @ExceptionHandler(Exception::class)
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   fun exceptionHandler(e: Exception, model: Model): String {
