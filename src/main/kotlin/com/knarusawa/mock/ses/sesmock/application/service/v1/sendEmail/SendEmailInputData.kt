@@ -1,8 +1,6 @@
-package com.knarusawa.mock.ses.sesmock.service.sendMail
+package com.knarusawa.mock.ses.sesmock.application.service.v1.sendEmail
 
-data class SendMailInputData(
-    val action: String,
-
+data class SendEmailInputData(
     val version: String?,
 
     val configurationSetName: String?,
@@ -39,7 +37,6 @@ data class SendMailInputData(
 ) {
   companion object {
     fun of(
-        action: String,
         version: String?,
         configurationSetName: String?,
         toAddress: String?,
@@ -57,8 +54,7 @@ data class SendMailInputData(
         source: String,
         sourceArn: String?,
         tags: String?,
-    ) = SendMailInputData(
-        action = action,
+    ) = SendEmailInputData(
         version = version,
         configurationSetName = configurationSetName,
         toAddress = toAddress,

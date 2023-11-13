@@ -1,4 +1,4 @@
-package com.knarusawa.mock.ses.sesmock.service.batchClearMail
+package com.knarusawa.mock.ses.sesmock.application.service.batchClearMail
 
 import com.knarusawa.mock.ses.sesmock.infrastructure.repository.MailRepository
 import com.knarusawa.mock.ses.sesmock.util.DateTimeUtil
