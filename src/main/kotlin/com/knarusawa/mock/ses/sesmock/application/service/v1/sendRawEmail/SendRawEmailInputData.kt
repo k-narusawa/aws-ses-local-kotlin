@@ -6,16 +6,16 @@ data class SendRawEmailInputData(
         val configurationSetName: String?,
 
         val rawMessageData: String
-){
-    companion object{
-         fun of(
-            version: String?,
-            configurationSetName: String?,
-            rawMessageData: String
+) {
+    companion object {
+        fun of(
+                version: String?,
+                configurationSetName: String?,
+                rawMessageData: String
         ) = SendRawEmailInputData(
-            version = version,
-            configurationSetName = configurationSetName,
-            rawMessageData = rawMessageData
+                version = version,
+                configurationSetName = configurationSetName,
+                rawMessageData = rawMessageData
         )
     }
 }

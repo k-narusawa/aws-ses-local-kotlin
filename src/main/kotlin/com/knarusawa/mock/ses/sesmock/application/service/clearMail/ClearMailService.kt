@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service
 
 @Service
 class ClearMailService(
-    private val mailRepository: MailRepository
+        private val mailRepository: MailRepository
 ) {
-  fun exec() {
-    mailRepository.deleteAll()
-  }
+    fun exec() {
+        mailRepository.deleteAll()
+    }
 }

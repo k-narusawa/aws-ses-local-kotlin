@@ -9,16 +9,16 @@ import java.time.LocalDateTime
 
 @Repository
 interface MailRepository : CrudRepository<Mail, Long> {
-  fun findByToOrderByAtDesc(
-      toAddress: String?,
-      pageable: Pageable
-  ): Page<Mail>
+    fun findByToOrderByAtDesc(
+            toAddress: String?,
+            pageable: Pageable
+    ): Page<Mail>
 
-  fun findByOrderByAtDesc(
-      pageable: Pageable
-  ): Page<Mail>
+    fun findByOrderByAtDesc(
+            pageable: Pageable
+    ): Page<Mail>
 
-  fun findByAtBefore(createdAt: LocalDateTime, pageable: Pageable): Page<Mail>
+    fun findByAtBefore(createdAt: LocalDateTime, pageable: Pageable): Page<Mail>
 
-  fun findByToAndAtAfter(toAddress: String?, createdAt: LocalDateTime, pageable: Pageable): Page<Mail>
+    fun findByToAndAtAfter(toAddress: String?, createdAt: LocalDateTime, pageable: Pageable): Page<Mail>
 }

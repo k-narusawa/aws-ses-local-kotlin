@@ -1,144 +1,150 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
-    <title>aws-ses-local</title>
-    <link th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        .mail-content {
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 16px;
-            margin: 8px 0;
-            background: #f9f9f9;
-        }
-        .mail-subject{
-            font-size: 1.2rem;
-        }
-        .mail-subject, .mail-to, .mail-from, .mail-text, .mail-html, .mail-at {
-            font-weight: bold;
-        }
+  <meta charset="UTF-8"/>
+  <title>aws-ses-local</title>
+  <link th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" rel="stylesheet">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    .mail-content {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 8px 0;
+      background: #f9f9f9;
+    }
 
-        .select-small {
-            width: 100px;
-            margin: 0 auto;
-            text-align: center;
-        }
+    .mail-subject {
+      font-size: 1.2rem;
+    }
 
-        .font-weight-bold {
-            font-weight: bold;
-        }
-    </style>
+    .mail-subject, .mail-to, .mail-from, .mail-text, .mail-html, .mail-at {
+      font-weight: bold;
+    }
+
+    .select-small {
+      width: 100px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .font-weight-bold {
+      font-weight: bold;
+    }
+  </style>
 
 </head>
 <body>
 <div th:insert="common/header :: header_fragment"></div>
 <div class="main">
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">CurrentPage</th>
-            <th scope="col">TotalPage</th>
-            <th scope="col">TotalElements</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>[[${mails.currentPage + 1}]]</td>
-            <td>[[${mails.totalPage}]]</td>
-            <td>[[${mails.totalElements}]]</td>
-        </tr>
-        </tbody>
-    </table>
-    <div class="accordion accordion-flush" id="accordionFlush">
-        <div class="accordion-item">
-            <th:block th:each="mail : ${mails.emails}">
-                <h2 class="accordion-header" th:id="${mail.messageId}">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            th:data-bs-target="'#flush-' + ${mail.messageId}" aria-expanded="false"
-                            th:aria-controls="'flush-' + ${mail.messageId}">
-                        <div>
-                            <span class="font-weight-bold">[[${mail.subject}]]</span><br>
-                            to: [[${mail.destination.to[0]}]]
-                        </div>
-                    </button>
-                </h2>
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">CurrentPage</th>
+      <th scope="col">TotalPage</th>
+      <th scope="col">TotalElements</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>[[${mails.currentPage + 1}]]</td>
+      <td>[[${mails.totalPage}]]</td>
+      <td>[[${mails.totalElements}]]</td>
+    </tr>
+    </tbody>
+  </table>
+  <div class="accordion accordion-flush" id="accordionFlush">
+    <div class="accordion-item">
+      <th:block th:each="mail : ${mails.emails}">
+        <h2 class="accordion-header" th:id="${mail.messageId}">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  th:data-bs-target="'#flush-' + ${mail.messageId}" aria-expanded="false"
+                  th:aria-controls="'flush-' + ${mail.messageId}">
+            <div>
+              <span class="font-weight-bold">[[${mail.subject}]]</span><br>
+              to: [[${mail.destination.to[0]}]]
+            </div>
+          </button>
+        </h2>
 
-                <div th:id="'flush-' + ${mail.messageId}" class="accordion-collapse collapse"
-                     th:aria-labelledby="${mail.messageId}" data-bs-parent="#accordionFlush">
-                    <div class="accordion-body mail-content">
-                        <p class="mail-subject"> [[${mail.subject}]]</p>
-                        <p class="mail-to">To: [[${mail.destination.to[0]}]]</p>
-                        <p class="mail-from">From: [[${mail.from}]]</p>
-                        <p class="mail-text">Text:<br/>
-                            <span th:utext="${mail.body.viewText}"></span>
-                        </p>
-                        <p class="mail-html">HTML:<br/>
-                            <span th:utext="${mail.body.html}"></span>
-                        </p>
-                        <p class="mail-at">At: [[${mail.at}]]</p>
-                    </div>
-                </div>
-            </th:block>
+        <div th:id="'flush-' + ${mail.messageId}" class="accordion-collapse collapse"
+             th:aria-labelledby="${mail.messageId}" data-bs-parent="#accordionFlush">
+          <div class="accordion-body mail-content">
+            <p class="mail-subject"> [[${mail.subject}]]</p>
+            <p class="mail-to">To: [[${mail.destination.to[0]}]]</p>
+            <p class="mail-from">From: [[${mail.from}]]</p>
+            <p class="mail-text">Text:<br/>
+              <span th:utext="${mail.body.viewText}"></span>
+            </p>
+            <p class="mail-html">HTML:<br/>
+              <span th:utext="${mail.body.html}"></span>
+            </p>
+            <p class="mail-at">At: [[${mail.at}]]</p>
+          </div>
         </div>
+      </th:block>
     </div>
-    <th:block th:if="${mails.totalPage > 0}">
-        <div class="d-flex align-items-center justify-content-center">
-            <a th:if="${mails.currentPage > 0}"
-               th:href="@{'?page=' + ${mails.currentPage}}"
-               class="mx-2">
-                <i class="fa-solid fa-arrow-left fa-beat" style="color: #005eff;"></i>
-            </a>
-            <span th:unless="${mails.currentPage > 0}" class="mx-2" style="visibility: hidden;">
+  </div>
+  <th:block th:if="${mails.totalPage > 0}">
+    <div class="d-flex align-items-center justify-content-center">
+      <a th:if="${mails.currentPage > 0}"
+         th:href="@{'?page=' + ${mails.currentPage}}"
+         class="mx-2">
+        <i class="fa-solid fa-arrow-left fa-beat" style="color: #005eff;"></i>
+      </a>
+      <span th:unless="${mails.currentPage > 0}" class="mx-2" style="visibility: hidden;">
                <i class="fa-solid fa-arrow-left" style="color: #005eff;"></i>
             </span>
-            <form th:action="@{''}" method="get" class="d-inline-block mb-0">
-                <div class="form-group">
-                    <select class="form-control select-small" id="pageSelect" name="page" onchange="this.form.submit()">
-                        <option th:each="page : ${#numbers.sequence(0, mails.totalPage - 1)}"
-                                th:value="${page + 1}"
-                                th:text="${page + 1}"
-                                th:selected="${page == mails.currentPage}">
-                        </option>
-                    </select>
-                </div>
-            </form>
-            <a th:if="${mails.currentPage + 1 < mails.totalPage}"
-               th:href="@{'?page=' + ${mails.currentPage + 2}}"
-               class="mx-2">
-                <i class="fa-solid fa-arrow-right fa-beat" style="color: #005eff;"></i>
-            </a>
-            <span th:unless="${mails.currentPage + 1 < mails.totalPage}" class="mx-2" style="visibility: hidden;">
+      <form th:action="@{''}" method="get" class="d-inline-block mb-0">
+        <div class="form-group">
+          <select class="form-control select-small" id="pageSelect" name="page"
+                  onchange="this.form.submit()">
+            <option th:each="page : ${#numbers.sequence(0, mails.totalPage - 1)}"
+                    th:value="${page + 1}"
+                    th:text="${page + 1}"
+                    th:selected="${page == mails.currentPage}">
+            </option>
+          </select>
+        </div>
+      </form>
+      <a th:if="${mails.currentPage + 1 < mails.totalPage}"
+         th:href="@{'?page=' + ${mails.currentPage + 2}}"
+         class="mx-2">
+        <i class="fa-solid fa-arrow-right fa-beat" style="color: #005eff;"></i>
+      </a>
+      <span th:unless="${mails.currentPage + 1 < mails.totalPage}" class="mx-2"
+            style="visibility: hidden;">
                <i class="fa-solid fa-arrow-right" style="color: #005eff;"></i>
             </span>
-        </div>
-    </th:block>
-    <div class="footer">
-        <div class="container text-center">
-            <a href="https://github.com/k-narusawa/aws-ses-local-kotlin" target="_blank">
-                <i class="fab fa-github"></i> Report Issue
-            </a>
-        </div>
     </div>
+  </th:block>
+  <div class="footer">
+    <div class="container text-center">
+      <a href="https://github.com/k-narusawa/aws-ses-local-kotlin" target="_blank">
+        <i class="fab fa-github"></i> Report Issue
+      </a>
+    </div>
+  </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Do you want to delete all emails?</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <form th:action="@{'/clear-all'}" th:method="post" data-bs-dismiss="modal">
-                    <input type="hidden" name="_method"/>
-                    <button type="submit" class="btn btn-danger">Mail Clear</button>
-                </form>
-            </div>
-        </div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Do you want to delete all emails?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <form th:action="@{'/clear-all'}" th:method="post" data-bs-dismiss="modal">
+          <input type="hidden" name="_method"/>
+          <button type="submit" class="btn btn-danger">Mail Clear</button>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 
 <script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"></script>

@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class SesMockApplication
 
 fun main(args: Array<String>) {
-	runApplication<SesMockApplication>(*args)
+    runApplication<SesMockApplication>(*args)
 }

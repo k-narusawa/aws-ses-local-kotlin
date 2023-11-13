@@ -9,7 +9,7 @@ data class ApiErrorResponse(
     private val log = logger()
 
     companion object {
-        fun of(exception: Exception ,logLevel: LogLevel, errorMessage: String) =
+        fun of(exception: Exception, logLevel: LogLevel, errorMessage: String) =
                 ApiErrorResponse(
                         errorMessage = errorMessage,
                 ).also { it.log(exception, logLevel, errorMessage) }

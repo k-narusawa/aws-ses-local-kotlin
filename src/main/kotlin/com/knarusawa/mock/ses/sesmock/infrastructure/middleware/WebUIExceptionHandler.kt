@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.ResponseStatus
 
 @ControllerAdvice
 class WebUIExceptionHandler {
-  @ExceptionHandler(Exception::class)
-  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-  fun exceptionHandler(e: Exception, model: Model): String {
-    model.addAttribute("errorMessage", e.message ?: "An unknown error occurred.")
-    return "error"
-  }
+    @ExceptionHandler(Exception::class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    fun exceptionHandler(e: Exception, model: Model): String {
+        model.addAttribute("errorMessage", e.message ?: "An unknown error occurred.")
+        return "error"
+    }
 }

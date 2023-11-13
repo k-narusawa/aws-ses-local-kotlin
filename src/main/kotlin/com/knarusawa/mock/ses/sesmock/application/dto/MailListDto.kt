@@ -9,12 +9,12 @@ data class MailListDto(
         val totalPage: Int,
         val totalElements: Long,
 ) {
-  companion object {
-    fun from(emails: Page<Mail>) = MailListDto(
-        emails = emails.toList().map { MailDto.from(it) },
-        currentPage = emails.pageable.pageNumber,
-        totalPage = emails.totalPages,
-        totalElements = emails.totalElements
-    )
-  }
+    companion object {
+        fun from(emails: Page<Mail>) = MailListDto(
+                emails = emails.toList().map { MailDto.from(it) },
+                currentPage = emails.pageable.pageNumber,
+                totalPage = emails.totalPages,
+                totalElements = emails.totalElements
+        )
+    }
 }

@@ -9,14 +9,14 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional
 class BatchClearMailService(
-    private val mailRepository: MailRepository
+        private val mailRepository: MailRepository
 ) {
-  fun exec(page: Int, size: Int, seconds: Int): Int {
-    val pageEntity = mailRepository.findByAtBefore(
-        createdAt = DateTimeUtil.secondsAgo(seconds.toLong()),
-        pageable = PageRequest.of(page, size)
-    )
-    mailRepository.deleteAll(pageEntity)
-    return pageEntity.numberOfElements
-  }
+    fun exec(page: Int, size: Int, seconds: Int): Int {
+        val pageEntity = mailRepository.findByAtBefore(
+                createdAt = DateTimeUtil.secondsAgo(seconds.toLong()),
+                pageable = PageRequest.of(page, size)
+        )
+        mailRepository.deleteAll(pageEntity)
+        return pageEntity.numberOfElements
+    }
 }

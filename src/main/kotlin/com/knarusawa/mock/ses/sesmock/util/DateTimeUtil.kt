@@ -6,16 +6,16 @@ import java.time.ZoneId
 import java.time.temporal.ChronoUnit
 
 object DateTimeUtil {
-  fun minutesAgo(minutes: Long): LocalDateTime {
-    return LocalDateTime.now().minus(minutes, ChronoUnit.MINUTES)
-  }
+    fun minutesAgo(minutes: Long): LocalDateTime {
+        return LocalDateTime.now().minus(minutes, ChronoUnit.MINUTES)
+    }
 
-  fun secondsAgo(seconds: Long): LocalDateTime {
-    return LocalDateTime.now().minus(seconds, ChronoUnit.SECONDS)
-  }
+    fun secondsAgo(seconds: Long): LocalDateTime {
+        return LocalDateTime.now().minus(seconds, ChronoUnit.SECONDS)
+    }
 
-  fun timestampToLocalDateTime(timestamp: Long): LocalDateTime {
-    val instant = Instant.ofEpochMilli(timestamp)
-    return LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
-  }
+    fun timestampToLocalDateTime(timestamp: Long): LocalDateTime {
+        val instant = Instant.ofEpochMilli(timestamp)
+        return LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
+    }
 }
