@@ -1,16 +1,16 @@
-package com.knarusawa.mock.ses.sesmock.dto
+package com.knarusawa.mock.ses.sesmock.application.service.dto
 
 import com.knarusawa.mock.ses.sesmock.domain.Mail
 import com.knarusawa.mock.ses.sesmock.util.StringUtil
 import java.time.LocalDateTime
 
 data class MailDto(
-    val messageId: String,
-    val from: String,
-    val destination: Destination,
-    val subject: String,
-    val body: Body,
-    val at: LocalDateTime
+        val messageId: String,
+        val from: String,
+        val destination: Destination,
+        val subject: String,
+        val body: Body,
+        val at: LocalDateTime
 ) {
 
   data class Destination(
