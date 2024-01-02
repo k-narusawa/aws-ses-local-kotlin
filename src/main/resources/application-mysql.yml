@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: ${DATA_SOURCE_URL:jdbc:mysql://127.0.0.1:13306/ses_mock}
+    username: ${DATA_SOURCE_USER:docker}
+    password: ${DATA_SOURCE_PASSWORD:docker}
+    driverClassName: com.mysql.cj.jdbc.Driver
+  sql:
+    init:
+      schema-locations: classpath:sql/mysql/schema.sql
