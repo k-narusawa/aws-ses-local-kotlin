@@ -8,6 +8,8 @@ import com.knarusawa.mock.ses.sesmock.application.service.v1.sendEmail.SendEmail
 import com.knarusawa.mock.ses.sesmock.application.service.v1.sendEmail.SendEmailService
 import com.knarusawa.mock.ses.sesmock.application.service.v1.sendRawEmail.SendRawEmailInputData
 import com.knarusawa.mock.ses.sesmock.application.service.v1.sendRawEmail.SendRawEmailSendService
+import com.knarusawa.mock.ses.sesmock.infrastructure.dto.request.V2EmailOutboundEmailPostRequest
+import com.knarusawa.mock.ses.sesmock.infrastructure.dto.response.V2EmailOutboundEmailPostResponse
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
@@ -91,6 +93,16 @@ class SESRestController(
         }
 
         throw RuntimeException("Not implemented")
+    }
+
+    @PostMapping("/v2/email/outbound-emails")
+    @ResponseStatus(HttpStatus.OK)
+    fun v2EmailOutboundEmailPost(
+            @RequestBody v2EmailOutboundEmailPostRequest: V2EmailOutboundEmailPostRequest
+    ): V2EmailOutboundEmailPostResponse {
+        return V2EmailOutboundEmailPostResponse(
+                messageId = "dummy"
+        )
     }
 
     @GetMapping("/store")
