@@ -1,4 +1,4 @@
-package com.knarusawa.mock.ses.sesmock.adapter.controller
+package com.knarusawa.mock.ses.sesmock.adapter.controller.web
 
 import com.knarusawa.mock.ses.sesmock.application.service.clearMail.ClearMailService
 import com.knarusawa.mock.ses.sesmock.application.service.getMailList.GetMailListService
@@ -6,16 +6,14 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 
 @Controller
-@RequestMapping("/")
 class SESController(
         private val clearMailService: ClearMailService,
         private val getMailListService: GetMailListService
 ) {
-    @GetMapping
+    @GetMapping("/")
     fun index(
             model: Model,
             @RequestParam(name = "to") to: String? = null,
