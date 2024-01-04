@@ -56,9 +56,9 @@ data class SesV2ApiInputData(
     }
 
     data class Destination(
-            val bccAddress: String?,
-            val ccAddress: String?,
-            val toAddress: String?
+            val bccAddresses: String?,
+            val ccAddresses: String?,
+            val toAddresses: String?
     )
 
     data class EmailTag(
@@ -95,9 +95,9 @@ data class SesV2ApiInputData(
                             }
                     ),
                     destination = Destination(
-                            bccAddress = request.destination.bccAddress,
-                            ccAddress = request.destination.ccAddress,
-                            toAddress = request.destination.toAddress
+                            bccAddresses = request.destination.bccAddresses?.joinToString(","),
+                            ccAddresses = request.destination.ccAddresses?.joinToString(","),
+                            toAddresses = request.destination.toAddresses?.joinToString(",")
                     ),
                     emailTags = request.emailTags?.map { EmailTag(name = it.name, value = it.value) },
                     feedbackForwardingEmailAddress = request.feedbackForwardingEmailAddress,
