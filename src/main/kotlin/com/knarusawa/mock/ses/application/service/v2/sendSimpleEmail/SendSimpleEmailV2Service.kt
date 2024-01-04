@@ -15,9 +15,9 @@ class SendSimpleEmailV2Service(
         val mail = Mail.of(
                 messageId = messageId,
                 from = inputData.fromEmailAddress ?: "",
-                to = inputData.destination.toAddress,
-                cc = inputData.destination.ccAddress,
-                bcc = inputData.destination.bccAddress,
+                to = inputData.destination.toAddresses,
+                cc = inputData.destination.ccAddresses,
+                bcc = inputData.destination.bccAddresses,
                 subject = inputData.content.simple?.subject?.data ?: "",
                 textBody = inputData.content.simple?.body?.text?.data ?: "",
                 htmlBody = inputData.content.simple?.body?.html?.data ?: "",

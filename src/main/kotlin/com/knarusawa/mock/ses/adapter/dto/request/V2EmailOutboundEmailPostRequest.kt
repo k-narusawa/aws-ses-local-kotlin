@@ -95,12 +95,12 @@ data class V2EmailOutboundEmailPostRequest(
     }
 
     data class Destination(
-            @JsonProperty("BccAddress")
-            val bccAddress: String?,
-            @JsonProperty("CcAddress")
-            val ccAddress: String?,
-            @JsonProperty("ToAddress")
-            val toAddress: String?
+            @JsonProperty("BccAddresses")
+            val bccAddresses: List<String>?,
+            @JsonProperty("CcAddresses")
+            val ccAddresses: List<String>?,
+            @JsonProperty("ToAddresses")
+            val toAddresses: List<String>?
     )
 
     data class EmailTag(
