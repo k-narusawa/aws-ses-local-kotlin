@@ -98,13 +98,11 @@ class SESMockRestController(
             @RequestBody v2EmailOutboundEmailPostRequest: V2EmailOutboundEmailPostRequest
     ): V2EmailOutboundEmailPostResponse {
         val inputData = SesV2ApiInputData.fromV2EmailOutboundEmailPostRequest(v2EmailOutboundEmailPostRequest)
-        when {
+        val messageId = when {
             v2EmailOutboundEmailPostRequest.content.simple != null -> sendSimpleEmailV2Service.exec(inputData)
             v2EmailOutboundEmailPostRequest.content.raw != null -> sendRawEmailV2Service.exec(inputData)
             else -> throw RuntimeException("Bad Request")
         }
-        return V2EmailOutboundEmailPostResponse(
-                messageId = "dummy"
-        )
+        return V2EmailOutboundEmailPostResponse(messageId = messageId)
     }
 }
