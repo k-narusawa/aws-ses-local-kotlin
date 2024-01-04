@@ -1,4 +1,4 @@
-package com.knarusawa.mock.ses.sesmock.infrastructure.middleware
+package com.knarusawa.mock.ses.sesmock.adapter.middleware
 
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest

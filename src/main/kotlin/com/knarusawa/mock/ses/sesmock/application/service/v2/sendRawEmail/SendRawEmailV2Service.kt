@@ -1,6 +1,7 @@
-package com.knarusawa.mock.ses.sesmock.application.service.v1.sendRawEmail
+package com.knarusawa.mock.ses.sesmock.application.service.v2.sendRawEmail
 
 import com.knarusawa.mock.ses.sesmock.adapter.gateway.db.MailRepository
+import com.knarusawa.mock.ses.sesmock.application.service.v2.SesV2ApiInputData
 import com.knarusawa.mock.ses.sesmock.domain.Mail
 import org.springframework.stereotype.Service
 import java.io.ByteArrayInputStream
@@ -11,11 +12,13 @@ import javax.mail.Session
 import javax.mail.internet.MimeMessage
 
 @Service
-class SendRawEmailSendService(
+class SendRawEmailV2Service(
         private val mailRepository: MailRepository
 ) {
-    fun exec(inputData: SendRawEmailInputData): String {
-        val decodedData = Base64.getDecoder().decode(inputData.rawMessageData).toString(Charsets.UTF_8)
+    fun exec(inputData: SesV2ApiInputData): String {
+        val decodedData = Base64.getDecoder()
+                .decode(inputData.content.raw?.data)
+                .toString(Charsets.UTF_8)
         val message = parseRawEmail(decodedData)
         val messageId = "ses-${(Math.random() * 900000000 + 100000000).toInt()}"
 
