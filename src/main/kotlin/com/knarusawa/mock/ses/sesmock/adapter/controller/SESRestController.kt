@@ -1,5 +1,7 @@
-package com.knarusawa.mock.ses.sesmock.infrastructure.controller
+package com.knarusawa.mock.ses.sesmock.adapter.controller
 
+import com.knarusawa.mock.ses.sesmock.adapter.dto.request.V2EmailOutboundEmailPostRequest
+import com.knarusawa.mock.ses.sesmock.adapter.dto.response.V2EmailOutboundEmailPostResponse
 import com.knarusawa.mock.ses.sesmock.application.dto.MailListDto
 import com.knarusawa.mock.ses.sesmock.application.service.batchClearMail.BatchClearMailService
 import com.knarusawa.mock.ses.sesmock.application.service.clearMail.ClearMailService
@@ -11,8 +13,6 @@ import com.knarusawa.mock.ses.sesmock.application.service.v1.sendRawEmail.SendRa
 import com.knarusawa.mock.ses.sesmock.application.service.v2.SesV2ApiInputData
 import com.knarusawa.mock.ses.sesmock.application.service.v2.sendRawEmail.SendRawEmailV2Service
 import com.knarusawa.mock.ses.sesmock.application.service.v2.sendSimpleEmail.SendSimpleEmailV2Service
-import com.knarusawa.mock.ses.sesmock.infrastructure.dto.request.V2EmailOutboundEmailPostRequest
-import com.knarusawa.mock.ses.sesmock.infrastructure.dto.response.V2EmailOutboundEmailPostResponse
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 

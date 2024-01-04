@@ -1,4 +1,4 @@
-package com.knarusawa.mock.ses.sesmock.infrastructure.middleware
+package com.knarusawa.mock.ses.sesmock.adapter.middleware
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

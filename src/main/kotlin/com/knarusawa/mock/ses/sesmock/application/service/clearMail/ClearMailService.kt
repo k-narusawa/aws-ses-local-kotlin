@@ -1,6 +1,6 @@
 package com.knarusawa.mock.ses.sesmock.application.service.clearMail
 
-import com.knarusawa.mock.ses.sesmock.infrastructure.repository.MailRepository
+import com.knarusawa.mock.ses.sesmock.adapter.gateway.db.MailRepository
 import org.springframework.stereotype.Service
 
 @Service

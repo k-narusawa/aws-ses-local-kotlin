@@ -1,4 +1,4 @@
-package com.knarusawa.mock.ses.sesmock.infrastructure.repository
+package com.knarusawa.mock.ses.sesmock.adapter.gateway.db
 
 import com.knarusawa.mock.ses.sesmock.domain.Mail
 import org.springframework.data.domain.Page

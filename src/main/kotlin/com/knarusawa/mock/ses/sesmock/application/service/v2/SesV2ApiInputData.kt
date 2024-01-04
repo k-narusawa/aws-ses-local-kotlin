@@ -1,6 +1,6 @@
 package com.knarusawa.mock.ses.sesmock.application.service.v2
 
-import com.knarusawa.mock.ses.sesmock.infrastructure.dto.request.V2EmailOutboundEmailPostRequest
+import com.knarusawa.mock.ses.sesmock.adapter.dto.request.V2EmailOutboundEmailPostRequest
 
 data class SesV2ApiInputData(
         val configurationSetName: String?,

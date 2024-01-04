@@ -1,4 +1,4 @@
-package com.knarusawa.mock.ses.sesmock.infrastructure.dto.response
+package com.knarusawa.mock.ses.sesmock.adapter.dto.response
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

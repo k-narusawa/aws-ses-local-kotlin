@@ -1,6 +1,6 @@
-package com.knarusawa.mock.ses.sesmock.infrastructure.middleware
+package com.knarusawa.mock.ses.sesmock.adapter.middleware
 
-import com.knarusawa.mock.ses.sesmock.infrastructure.dto.response.ApiErrorResponse
+import com.knarusawa.mock.ses.sesmock.adapter.dto.response.ApiErrorResponse
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.boot.logging.LogLevel
 import org.springframework.http.ResponseEntity

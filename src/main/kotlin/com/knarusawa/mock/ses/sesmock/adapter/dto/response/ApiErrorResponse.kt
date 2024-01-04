@@ -1,6 +1,6 @@
-package com.knarusawa.mock.ses.sesmock.infrastructure.dto.response
+package com.knarusawa.mock.ses.sesmock.adapter.dto.response
 
-import com.knarusawa.mock.ses.sesmock.infrastructure.middleware.logger
+import com.knarusawa.mock.ses.sesmock.adapter.middleware.logger
 import org.springframework.boot.logging.LogLevel
 
 data class ApiErrorResponse(
