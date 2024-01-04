@@ -8,6 +8,9 @@ import com.knarusawa.mock.ses.sesmock.application.service.v1.sendEmail.SendEmail
 import com.knarusawa.mock.ses.sesmock.application.service.v1.sendEmail.SendEmailService
 import com.knarusawa.mock.ses.sesmock.application.service.v1.sendRawEmail.SendRawEmailInputData
 import com.knarusawa.mock.ses.sesmock.application.service.v1.sendRawEmail.SendRawEmailSendService
+import com.knarusawa.mock.ses.sesmock.application.service.v2.SesV2ApiInputData
+import com.knarusawa.mock.ses.sesmock.application.service.v2.sendRawEmail.SendRawEmailV2Service
+import com.knarusawa.mock.ses.sesmock.application.service.v2.sendSimpleEmail.SendSimpleEmailV2Service
 import com.knarusawa.mock.ses.sesmock.infrastructure.dto.request.V2EmailOutboundEmailPostRequest
 import com.knarusawa.mock.ses.sesmock.infrastructure.dto.response.V2EmailOutboundEmailPostResponse
 import org.springframework.http.HttpStatus
@@ -18,6 +21,8 @@ import org.springframework.web.bind.annotation.*
 class SESRestController(
         private val sendEmailService: SendEmailService,
         private val sendRawEmailSendService: SendRawEmailSendService,
+        private val sendSimpleEmailV2Service: SendSimpleEmailV2Service,
+        private val sendRawEmailV2Service: SendRawEmailV2Service,
         private val getMailService: GetMailListService,
         private val clearMailService: ClearMailService,
         private val batchClearMailService: BatchClearMailService
@@ -100,6 +105,12 @@ class SESRestController(
     fun v2EmailOutboundEmailPost(
             @RequestBody v2EmailOutboundEmailPostRequest: V2EmailOutboundEmailPostRequest
     ): V2EmailOutboundEmailPostResponse {
+        val inputData = SesV2ApiInputData.fromV2EmailOutboundEmailPostRequest(v2EmailOutboundEmailPostRequest)
+        when {
+            v2EmailOutboundEmailPostRequest.content.simple != null -> sendSimpleEmailV2Service.exec(inputData)
+            v2EmailOutboundEmailPostRequest.content.raw != null -> sendRawEmailV2Service.exec(inputData)
+            else -> throw RuntimeException("Bad Request")
+        }
         return V2EmailOutboundEmailPostResponse(
                 messageId = "dummy"
         )

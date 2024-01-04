@@ -35,7 +35,7 @@ data class V2EmailOutboundEmailPostRequest(
 ) {
     data class Content(
             @JsonProperty("Raw")
-            val raw: Raw,
+            val raw: Raw?,
 
             @JsonProperty("Simple")
             val simple: Simple?,
