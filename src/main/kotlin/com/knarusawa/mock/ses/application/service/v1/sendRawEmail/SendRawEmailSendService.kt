@@ -28,6 +28,8 @@ class SendRawEmailSendService(
                 subject = message.subject,
                 textBody = message.content.toString(),
                 htmlBody = "",
+                listUnsubscribePost = message.getHeader("List-Unsubscribe-Post").firstOrNull() ?: "",
+                listUnsubscribeUrl = message.getHeader("List-Unsubscribe").firstOrNull() ?: "",
         )
 
         mailRepository.save(mail)

@@ -19,18 +19,22 @@ class SendRawEmailV2Service(
         val decodedData = Base64.getDecoder()
                 .decode(inputData.content.raw?.data)
                 .toString(Charsets.UTF_8)
+
         val message = parseRawEmail(decodedData)
+
         val messageId = "ses-${(Math.random() * 900000000 + 100000000).toInt()}"
 
         val mail = Mail.of(
                 messageId = messageId,
-                from = message.from.joinToString(),
+                from = inputData.fromEmailAddress ?: "",
                 to = message.getRecipients(Message.RecipientType.TO).joinToString(),
                 cc = "",
                 bcc = "",
                 subject = message.subject,
                 textBody = message.content.toString(),
                 htmlBody = "",
+                listUnsubscribePost = message.getHeader("List-Unsubscribe-Post").firstOrNull() ?: "",
+                listUnsubscribeUrl = message.getHeader("List-Unsubscribe").firstOrNull() ?: "",
         )
 
         mailRepository.save(mail)

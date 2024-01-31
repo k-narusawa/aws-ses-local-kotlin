@@ -22,6 +22,8 @@ class SendEmailService(
                 subject = inputData.subjectData,
                 textBody = inputData.textData,
                 htmlBody = inputData.htmlData,
+                listUnsubscribePost = "",
+                listUnsubscribeUrl = "",
         )
 
         mailRepository.save(mail)

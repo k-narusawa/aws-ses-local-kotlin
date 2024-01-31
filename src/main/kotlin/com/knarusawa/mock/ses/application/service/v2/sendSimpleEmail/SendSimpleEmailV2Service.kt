@@ -21,6 +21,8 @@ class SendSimpleEmailV2Service(
                 subject = inputData.content.simple?.subject?.data ?: "",
                 textBody = inputData.content.simple?.body?.text?.data ?: "",
                 htmlBody = inputData.content.simple?.body?.html?.data ?: "",
+                listUnsubscribePost = "",
+                listUnsubscribeUrl = "",
         )
 
         mailRepository.save(mail)

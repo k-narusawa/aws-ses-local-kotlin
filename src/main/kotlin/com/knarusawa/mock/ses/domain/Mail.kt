@@ -1,9 +1,6 @@
 package com.knarusawa.mock.ses.domain
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
-import jakarta.persistence.Table
+import jakarta.persistence.*
 import java.time.LocalDateTime
 
 @Entity
@@ -28,11 +25,19 @@ class Mail private constructor(
         @Column(name = "subject")
         val subject: String,
 
+        @Lob
         @Column(name = "text")
         val textBody: String?,
 
+        @Lob
         @Column(name = "html")
         val htmlBody: String?,
+
+        @Column(name = "list_unsubscribe_post")
+        val listUnsubscribePost: String? = null,
+
+        @Column(name = "list_unsubscribe_url")
+        val listUnsubscribeUrl: String? = null,
 
         @Column(name = "created_at")
         val at: LocalDateTime
@@ -46,7 +51,9 @@ class Mail private constructor(
                 bcc: String?,
                 subject: String,
                 textBody: String?,
-                htmlBody: String?
+                htmlBody: String?,
+                listUnsubscribePost: String?,
+                listUnsubscribeUrl: String?,
         ): Mail {
             return Mail(
                     messageId = messageId,
@@ -57,8 +64,16 @@ class Mail private constructor(
                     subject = subject,
                     textBody = textBody,
                     htmlBody = htmlBody,
+                    listUnsubscribePost = listUnsubscribePost,
+                    listUnsubscribeUrl = listUnsubscribeUrl,
                     at = LocalDateTime.now()
             )
         }
+    }
+
+    fun getUnsubscribeUrl():String?{
+        if(this.listUnsubscribePost != "List-Unsubscribe=One-Click") return null
+
+        return this.listUnsubscribeUrl
     }
 }

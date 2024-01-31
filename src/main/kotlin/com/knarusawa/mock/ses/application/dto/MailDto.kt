@@ -8,6 +8,7 @@ data class MailDto(
         val messageId: String,
         val from: String,
         val destination: Destination,
+        val unsubscribeUrl: String? = null,
         val subject: String,
         val body: Body,
         val at: LocalDateTime
@@ -34,6 +35,7 @@ data class MailDto(
                         cc = listOf(mail.cc),
                         bcc = listOf(mail.bcc),
                 ),
+                unsubscribeUrl = mail.getUnsubscribeUrl(),
                 subject = mail.subject,
                 body = Body(
                         text = mail.textBody,

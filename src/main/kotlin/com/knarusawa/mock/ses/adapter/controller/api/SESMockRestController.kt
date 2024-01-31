@@ -68,9 +68,7 @@ class SESMockRestController(
             val messageId = sendEmailService.exec(
                     inputData = sendEmailInputData
             )
-            return """
-      <?xml version="1.0" encoding="UTF-8"?><SendEmailResponse xmlns="http://ses.amazonaws.com/doc/2010-12-01/"><SendEmailResult><MessageId>${messageId}</MessageId></SendEmailResult></SendEmailResponse>
-    """.trimIndent()
+            return response(messageId = messageId)
         }
 
         if (action == "SendRawEmail") {
@@ -84,9 +82,7 @@ class SESMockRestController(
                     inputData = inputData
             )
 
-            return """
-        <?xml version="1.0" encoding="UTF-8"?><SendRawEmailResponse xmlns="http://ses.amazonaws.com/doc/2010-12-01/"><SendRawEmailResult><MessageId>${messageId}</MessageId></SendRawEmailResult></SendRawEmailResponse>
-      """.trimIndent()
+            return response(messageId = messageId)
         }
 
         throw RuntimeException("Not implemented")
@@ -104,5 +100,11 @@ class SESMockRestController(
             else -> throw RuntimeException("Bad Request")
         }
         return V2EmailOutboundEmailPostResponse(messageId = messageId)
+    }
+
+    fun response(messageId: String) : String{
+        return """
+        <?xml version="1.0" encoding="UTF-8"?><SendRawEmailResponse xmlns="http://ses.amazonaws.com/doc/2010-12-01/"><SendRawEmailResult><MessageId>${messageId}</MessageId></SendRawEmailResult></SendRawEmailResponse>
+      """.trimIndent()
     }
 }

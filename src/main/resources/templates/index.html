@@ -72,6 +72,7 @@
              th:aria-labelledby="${mail.messageId}" data-bs-parent="#accordionFlush">
           <div class="accordion-body mail-content">
             <p class="mail-subject"> [[${mail.subject}]]</p>
+            <p class="mail-to">UnsubscribeURL: [[${mail.unsubscribeUrl}]]</p>
             <p class="mail-to">To: [[${mail.destination.to[0]}]]</p>
             <p class="mail-from">From: [[${mail.from}]]</p>
             <p class="mail-text">Text:<br/>
