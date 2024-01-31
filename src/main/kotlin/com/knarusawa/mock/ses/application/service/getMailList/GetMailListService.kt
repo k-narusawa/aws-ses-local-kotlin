@@ -14,17 +14,12 @@ class GetMailListService(
 ) {
     @Transactional(readOnly = true)
     fun exec(since: String?, to: String?): MailListDto {
-        val entities = since?.let {
-            mailRepository.findByToAndAtAfter(
+        val entities = to?.let {
+            mailRepository.findByToOrderByAtDesc(
                     toAddress = to,
-                    createdAt = DateTimeUtil.timestampToLocalDateTime(it.toLong()),
                     pageable = PageRequest.of(0, 1000)
             )
-        } ?: mailRepository.findByToAndAtAfter(
-                toAddress = to,
-                createdAt = DateTimeUtil.minutesAgo(5L),
-                pageable = PageRequest.of(0, 1000)
-        )
+        } ?: mailRepository.findByOrderByAtDesc(pageable = PageRequest.of(0, 1000))
         return MailListDto.from(entities)
     }
 

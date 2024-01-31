@@ -24,6 +24,9 @@ class SendRawEmailV2Service(
 
         val messageId = "ses-${(Math.random() * 900000000 + 100000000).toInt()}"
 
+        val listUnsubscribePost = message.getHeader("List-Unsubscribe-Post")?.let { it.firstOrNull() ?: "" }
+        val listUnsubscribeUrl = message.getHeader("List-Unsubscribe")?.let { it.firstOrNull() ?: "" }
+
         val mail = Mail.of(
                 messageId = messageId,
                 from = inputData.fromEmailAddress ?: "",
@@ -33,8 +36,8 @@ class SendRawEmailV2Service(
                 subject = message.subject,
                 textBody = message.content.toString(),
                 htmlBody = "",
-                listUnsubscribePost = message.getHeader("List-Unsubscribe-Post").firstOrNull() ?: "",
-                listUnsubscribeUrl = message.getHeader("List-Unsubscribe").firstOrNull() ?: "",
+                listUnsubscribePost = listUnsubscribePost,
+                listUnsubscribeUrl = listUnsubscribeUrl,
         )
 
         mailRepository.save(mail)
