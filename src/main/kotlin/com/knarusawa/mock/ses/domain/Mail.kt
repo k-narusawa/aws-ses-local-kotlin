@@ -71,9 +71,13 @@ class Mail private constructor(
         }
     }
 
-    fun getUnsubscribeUrl():String?{
-        if(this.listUnsubscribePost != "List-Unsubscribe=One-Click") return null
+    fun getUnsubscribeUrl(): String? {
+        if (listUnsubscribeUrl == null || this.listUnsubscribePost != "List-Unsubscribe=One-Click") return null
 
-        return this.listUnsubscribeUrl
+        return this.listUnsubscribeUrl.split(",")
+                .map { it.trim() }
+                .firstOrNull { it.startsWith("<http") && it.endsWith(">") }
+                ?.removePrefix("<")
+                ?.removeSuffix(">")
     }
 }
