@@ -9,7 +9,6 @@ import java.time.LocalDateTime
 
 @Repository
 interface MailRepository : CrudRepository<Mail, Long> {
-    fun findByToOrderByAtDesc(toAddress: String?, pageable: Pageable): Page<Mail>
 
     fun findByOrderByAtDesc(pageable: Pageable): Page<Mail>
 
