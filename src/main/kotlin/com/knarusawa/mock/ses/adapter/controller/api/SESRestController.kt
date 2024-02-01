@@ -3,37 +3,33 @@ package com.knarusawa.mock.ses.adapter.controller.api
 import com.knarusawa.mock.ses.application.dto.MailListDto
 import com.knarusawa.mock.ses.application.service.batchClearMail.BatchClearMailService
 import com.knarusawa.mock.ses.application.service.clearMail.ClearMailService
-import com.knarusawa.mock.ses.application.service.getMailList.GetMailListService
+import com.knarusawa.mock.ses.application.service.query.MailDtoQueryService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
 @RestController
 class SESRestController(
-        private val getMailService: GetMailListService,
+        private val mailDtoQueryService: MailDtoQueryService,
         private val clearMailService: ClearMailService,
         private val batchClearMailService: BatchClearMailService
 ) {
     @GetMapping("/store")
     @ResponseStatus(HttpStatus.OK)
     fun storePost(
-            @RequestParam since: String?,
-            @RequestParam to: String?
+            @RequestParam since: Long?,
+            @RequestParam to: Long?
     ): MailListDto {
-        return getMailService.exec(since = since, to = to)
+        return mailDtoQueryService.findByAtBetween(since, to)
     }
 
     @GetMapping("/emails")
     @ResponseStatus(HttpStatus.OK)
     fun emailsGet(
-            @RequestParam to: String?,
+            @RequestParam(value = "to_address") toAddress: String?,
             @RequestParam(defaultValue = "0") page: Int,
             @RequestParam(defaultValue = "10") size: Int,
     ): MailListDto {
-        return getMailService.exec(
-                page = page,
-                size = size,
-                to = to,
-        )
+        return mailDtoQueryService.findByToAddress(toAddress = toAddress, page = page, size = size)
     }
 
     @PostMapping("/clear")

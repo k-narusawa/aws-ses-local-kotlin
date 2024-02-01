@@ -15,7 +15,7 @@ curl --location 'http://127.0.0.1:8080/store?since=1683448121000'
 * Search Emails
 
 ```shell  
-curl --location 'http://127.0.0.1:8080/emails?page=0&size=3&to=recipient%40example.com'  
+curl --location 'http://127.0.0.1:8080/emails?page=0&size=3&to_address=recipient%40example.com'  
 ```  
 
 * Clear Emails

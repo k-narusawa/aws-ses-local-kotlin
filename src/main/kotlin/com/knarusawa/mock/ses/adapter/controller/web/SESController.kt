@@ -1,7 +1,7 @@
 package com.knarusawa.mock.ses.adapter.controller.web
 
 import com.knarusawa.mock.ses.application.service.clearMail.ClearMailService
-import com.knarusawa.mock.ses.application.service.getMailList.GetMailListService
+import com.knarusawa.mock.ses.application.service.query.MailDtoQueryService
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam
 @Controller
 class SESController(
         private val clearMailService: ClearMailService,
-        private val getMailListService: GetMailListService
+        private val mailDtoQueryService: MailDtoQueryService
 ) {
     @GetMapping("/")
     fun index(
@@ -20,8 +20,8 @@ class SESController(
             @RequestParam(name = "page", defaultValue = "1") page: Int,
             @RequestParam(name = "size", defaultValue = "10") size: Int,
     ): String {
-        val entities = getMailListService.exec(page = page - 1, size = size, to = to)
-        model.addAttribute("mails", entities)
+        val mails = mailDtoQueryService.findByToAddress(toAddress = to, page = page - 1, size = size)
+        model.addAttribute("mails", mails)
         model.addAttribute("to", to)
         return "index"
     }
